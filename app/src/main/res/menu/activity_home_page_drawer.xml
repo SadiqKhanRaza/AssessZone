@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/practice"
+            android:icon="@drawable/ic_fitness_center_black_24dp"
+            android:title="Practice" />
+        <item
+            android:id="@+id/attepmt"
+            android:icon="@drawable/ic_assignment_black_24dp"
+            android:title="Attempt" />
+        <item
+            android:id="@+id/result"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Result" />
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Profile" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+        </menu>
+    </item>
+
+</menu>
