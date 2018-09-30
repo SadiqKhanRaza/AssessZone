@@ -101,38 +101,40 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="215dp">
+        android:layout_marginBottom="260dp">
 
         <HorizontalScrollView
-            android:scrollbars="horizontal"
-            android:scrollbarSize="15dp"
-            android:keepScreenOn="true"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
-
-
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="292dp"
+            android:layout_gravity="center"
+            android:keepScreenOn="true"
             android:padding="5dp"
             android:scrollbarSize="15dp"
-            android:scrollbars="vertical">
-            <TextView
-                android:id="@+id/qText"
-                android:layout_width="match_parent"
-                android:justificationMode="inter_word"
-                android:maxWidth="450dp"
-                android:layout_height="wrap_content"
-                android:text="eg"
-                android:textSize="30sp" />
-
-        </ScrollView>
+            android:scrollbars="horizontal">
 
 
-        </HorizontalScrollView
->
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:scrollbarSize="15dp"
+                android:scrollbars="vertical">
+
+                <TextView
+                    android:id="@+id/qText"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:justificationMode="inter_word"
+                    android:maxWidth="450dp"
+                    android:text="eg"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </ScrollView>
+
+
+        </HorizontalScrollView>
 
     </android.support.v7.widget.CardView>
 
@@ -170,10 +172,9 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="208dp"
         android:layout_above="@+id/cardview3"
         android:layout_gravity="center"
-        android:layout_marginBottom="5dp"
         android:keepScreenOn="true"
         android:padding="5dp"
         android:scrollbarSize="5dp"
@@ -187,34 +188,46 @@
             android:scrollbarSize="15dp"
             android:scrollbars="vertical">
 
-          <RadioGroup
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:paddingTop="15dp"
-              android:paddingBottom="5dp">
-              <RadioButton
-                  android:id="@+id/opt1"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:maxWidth="400dp"
-                  android:text="RadioButtonkggl ug ucgduyfg dufg gu udgflduggugfudgys fuygs  dfadfayud " />
-              <RadioButton
-                  android:id="@+id/opt2"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="RadioButton" />
-              <RadioButton
-                  android:id="@+id/opt3"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="RadioButton" />
-              <RadioButton
-                  android:id="@+id/opt4"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="RadioButton" />
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp"
+                android:paddingTop="10dp">
 
-          </RadioGroup>
+                <RadioButton
+                    android:id="@+id/opt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="380dp"
+                    android:text="RadioButtonkggl ug ucgduyfg dufg gu udgflduggugfudgys fuygs  dfadfayud "
+                    android:textSize="17sp" />
+
+                <RadioButton
+                    android:id="@+id/opt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="380dp"
+                    android:text="RadioButton"
+                    android:textSize="17sp" />
+
+                <RadioButton
+                    android:id="@+id/opt3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="370dp"
+                    android:text="RadioButton"
+                    android:textSize="17sp" />
+
+                <RadioButton
+                    android:id="@+id/opt4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="370dp"
+                    android:text="RadioButton"
+                    android:textSize="17sp" />
+
+            </RadioGroup>
         </ScrollView>
 
 

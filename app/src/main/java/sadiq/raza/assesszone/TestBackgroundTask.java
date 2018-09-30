@@ -139,7 +139,7 @@ import java.util.ArrayList;
 
                     JSONObject a=new JSONObject(ans);
                     String answer= a.getString("ans1");
-                    Toast.makeText(context, "" +question, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "" +question, Toast.LENGTH_SHORT).show();
                     //Log.e("Dsd",question+"\n"+option1+" "+option2+" "+option3+" "+option4+" " +answer);
                     ArrayList<String > optionAl = new ArrayList<>();
                     optionAl.add(option1);
@@ -154,6 +154,12 @@ import java.util.ArrayList;
 
             return  null;
 
+        }
+        public boolean isComplete()
+        {
+            if(quesList.size()<1)
+                return false;
+            return true;
         }
     public ArrayList<MyDataStructure> getQuestion()
     {
