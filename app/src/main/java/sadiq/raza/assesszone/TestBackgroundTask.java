@@ -98,7 +98,6 @@ import java.util.ArrayList;
                 if(result!=null)
                 {
                     length=load(result);
-                    Toast.makeText(context, "length :"+length, Toast.LENGTH_SHORT).show();
 
                 }
 

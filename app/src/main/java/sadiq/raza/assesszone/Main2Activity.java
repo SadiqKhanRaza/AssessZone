@@ -22,11 +22,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     String name;
     private int i=0,length;
     private  MyDataStructure s;
-    //private TestBackgroundTask testBackgroundTask;
-    private int quesNo;
     TextView tv_name,tv_ques;
     Button next,prev,clear;
-    private String question;
     static ArrayList<MyDataStructure> al;
     private ArrayList<String> options;
     private int responseArray[];
@@ -38,17 +35,24 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         rb2=findViewById(R.id.opt2);
         rb3=findViewById(R.id.opt3);
         rb4=findViewById(R.id.opt4);
+
+        next = findViewById(R.id.next);
+        prev = findViewById(R.id.prev);
+        prev.setEnabled(false);
+        clear = findViewById(R.id.clear);
+
+        next.setOnClickListener(this);
+        prev.setOnClickListener(this);
+        clear.setOnClickListener(this);
+
         radioGroup=findViewById(R.id.radioGroup);
         name = new HomePage().s_name;
         tv_name = findViewById(R.id.nameTest);
         tv_ques = findViewById(R.id.qText);
         tv_name.setText(name);
-        //HomePage.openTestPb.show();
-        //testBackgroundTask = new TestBackgroundTask(Main2Activity.this);
-        //testBackgroundTask.execute();
+
 
         al = testBackgroundTask.getQuestion();
-       // HomePage.openTestPb.dismiss();
         Log.e("sssss","as"+al.size()+"  "+al);
         length=testBackgroundTask.getLength();
         responseArray=new int[length];
@@ -124,14 +128,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
         //question=testBackgroundTask.question;
 
-        next = findViewById(R.id.next);
-        prev = findViewById(R.id.prev);
-        clear = findViewById(R.id.clear);
         s = new MyDataStructure();
-
-        next.setOnClickListener(this);
-        prev.setOnClickListener(this);
-        clear.setOnClickListener(this);
     }
 
     @Override
@@ -140,17 +137,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         {
             case  R.id.next:
             {
-                rb1.setChecked(false);
-                rb2.setChecked(false);
-                rb3.setChecked(false);
-                rb4.setChecked(false);
                 prev.setEnabled(true);
                 if(i>=length-1)
                 {
-                    Log.e("response : ",""+responseArray[0]+" "+responseArray[1]+" "
-                            +responseArray[2]+" "+responseArray[3]);
                     next.setEnabled(false);
-
                 }
                 else
                     {
@@ -162,6 +152,24 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         tv_ques.setText(Html.fromHtml((s.getQues())));
                         options=s.getOption();
                         setOption(options);
+                        if(responseArray[i]!=0)
+                        {
+                            if(responseArray[i]==1)
+                                rb1.setChecked(true);
+                            else if(responseArray[i]==2)
+                                rb2.setChecked(true);
+                            else if(responseArray[i]==3)
+                                rb3.setChecked(true);
+                            else if(responseArray[i]==4)
+                                rb4.setChecked(true);
+                        }
+                        else
+                        {
+                            rb1.setChecked(false);
+                            rb2.setChecked(false);
+                            rb3.setChecked(false);
+                            rb4.setChecked(false);
+                        }
                     Log.e("AAAAAAAAAAAAA", "01 i l "+i+"  "+length);
 
                 }
@@ -183,7 +191,19 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     tv_ques.setText(Html.fromHtml(s.getQues()));
                     options=s.getOption();
                     setOption(options);
+                    if(responseArray[i]!=0)
+                    {
+                        if(responseArray[i]==1)
+                            rb1.setChecked(true);
+                        else if(responseArray[i]==2)
+                            rb2.setChecked(true);
+                        else if(responseArray[i]==3)
+                            rb3.setChecked(true);
+                        else if(responseArray[i]==4)
+                            rb4.setChecked(true);
+                    }
                 }
+                break;
             }
             case R.id.clear:
             {
@@ -192,6 +212,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 rb2.setChecked(false);
                 rb3.setChecked(false);
                 rb4.setChecked(false);
+                StringBuilder sb = new StringBuilder("");
+                for(int j=0;j<length;j++)
+                    sb.append(" ").append(responseArray[j]);
+                Log.e("response: ",sb.toString());
                 break;
             }
         }
@@ -207,7 +231,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             rb4.setText(al.get(3));
         }
         else
-            Toast.makeText(this, "Size of ArrayList is less", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Size of Question list is less", Toast.LENGTH_SHORT).show();
     }
 
     @Override
