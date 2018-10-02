@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import static  sadiq.raza.assesszone.HomePage.testBackgroundTask;
 
 import java.util.ArrayList;
 
@@ -21,12 +22,12 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     String name;
     private int i=0,length;
     private  MyDataStructure s;
-    private TestBackgroundTask testBackgroundTask;
+    //private TestBackgroundTask testBackgroundTask;
     private int quesNo;
     TextView tv_name,tv_ques;
     Button next,prev,clear;
     private String question;
-    private ArrayList<MyDataStructure> al;
+    static ArrayList<MyDataStructure> al;
     private ArrayList<String> options;
     private int responseArray[];
     @Override
@@ -38,23 +39,19 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         rb3=findViewById(R.id.opt3);
         rb4=findViewById(R.id.opt4);
         radioGroup=findViewById(R.id.radioGroup);
-        name = getIntent().getExtras().getString("nameValue");
+        name = new HomePage().s_name;
         tv_name = findViewById(R.id.nameTest);
         tv_ques = findViewById(R.id.qText);
         tv_name.setText(name);
+        //HomePage.openTestPb.show();
+        //testBackgroundTask = new TestBackgroundTask(Main2Activity.this);
+        //testBackgroundTask.execute();
 
-        testBackgroundTask = new TestBackgroundTask(Main2Activity.this);
-        testBackgroundTask.execute();
-        int j=0;
-        boolean flag=testBackgroundTask.isComplete();
-        while (!flag&& j<5000)
-        {
-            Log.e("j ",""+j++);
-            flag=testBackgroundTask.isComplete();
-
-        }
         al = testBackgroundTask.getQuestion();
-        responseArray=new int[100];
+       // HomePage.openTestPb.dismiss();
+        Log.e("sssss","as"+al.size()+"  "+al);
+        length=testBackgroundTask.getLength();
+        responseArray=new int[length];
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -73,7 +70,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     }
                     case R.id.opt3:
                     {
-                        responseArray[i]=3;
+                         responseArray[i]=3;
                         break;
                     }
                     case R.id.opt4:
@@ -85,6 +82,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+
+
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 Main2Activity.this);
@@ -100,10 +99,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     public void onClick(DialogInterface dialog, int id) {
                         // if this button is clicked, close
                         // current activity
-                        length = testBackgroundTask.quesList.size();
+                        //length = al.size();
                         s = al.get(0);
 
-                        tv_ques.setText(Html.fromHtml(s.getQues().toString()));
+                        tv_ques.setText(Html.fromHtml(s.getQues()));
                         options=s.getOption();
                         setOption(options);
                         Log.e("s", "" + al.size() + "  " + al);
@@ -141,6 +140,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         {
             case  R.id.next:
             {
+                rb1.setChecked(false);
+                rb2.setChecked(false);
+                rb3.setChecked(false);
+                rb4.setChecked(false);
                 prev.setEnabled(true);
                 if(i>=length-1)
                 {
@@ -156,7 +159,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         i++;
                         s=al.get(i);
 
-                        tv_ques.setText(Html.fromHtml((s.getQues()).toString()));
+                        tv_ques.setText(Html.fromHtml((s.getQues())));
                         options=s.getOption();
                         setOption(options);
                     Log.e("AAAAAAAAAAAAA", "01 i l "+i+"  "+length);
@@ -177,7 +180,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                    // prev.setEnabled(true);
                     i--;
                     s=al.get(i);
-                    tv_ques.setText(Html.fromHtml(s.getQues().toString()));
+                    tv_ques.setText(Html.fromHtml(s.getQues()));
                     options=s.getOption();
                     setOption(options);
                 }
@@ -206,4 +209,11 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         else
             Toast.makeText(this, "Size of ArrayList is less", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        HomePage.openTestPb.dismiss();
+    }
+
 }

@@ -49,11 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     backgroundTask.execute(type,reg_no,password);
                     mProgressBar.show();
                 }
-                // BackgTask bt =new BackgTask();
-                ///callPage1();
-              // Toast.makeText(getApplicationContext(),"Hi There "+BackgroundTask.sname+" id :  "+BackgroundTask.reg_id, Toast.LENGTH_SHORT).show();
 
-               // getJSON("http://192.168.43.41/login.php");
             }
         });
 

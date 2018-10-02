@@ -104,7 +104,7 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
                 intent.setAction("CLOSE_SIGNUP");
                 context.sendBroadcast(intent);
             }
-        }, 2000);
+        }, 1500);
 
 
     }
