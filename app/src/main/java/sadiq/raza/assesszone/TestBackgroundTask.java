@@ -85,6 +85,7 @@ import java.util.ArrayList;
         protected void onPreExecute() {
 
         HomePage.openTestPb.show();
+        HomePage.openTestPb.setCancelable(false);
         }
 
 

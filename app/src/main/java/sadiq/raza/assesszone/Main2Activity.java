@@ -131,6 +131,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         // if this button is clicked, just close
                         // the dialog box and do nothing
                         dialog.cancel();
+                        finish();
                     }
                 });
 
@@ -244,6 +245,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     }
                 }, 3500);
                 next.setEnabled(true);
+                if(i==length-1)
+                    next.setText(R.string.next);
                 if(i<1)
                 {
                     prev.setEnabled(false);
@@ -331,12 +334,22 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     }
     private int findScore()
     {
+        int arr[]=getAnswer();
         int ans=0;
         for(int i=0;i<length;i++)
         {
-            if(responseArray[i]!=0)
+            if(responseArray[i]==arr[i])
                 ans++;
         }
         return ans;
+    }
+    private int[] getAnswer()
+    {
+        int arr[]=new int[length];
+        for(int i=0;i<length;i++)
+        {
+            arr[i]=Integer.parseInt(al.get(i).getAns());
+        }
+        return arr;
     }
 }
