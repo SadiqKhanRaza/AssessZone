@@ -53,7 +53,7 @@ import java.util.ArrayList;
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream=httpURLConnection.getOutputStream();
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode("27","UTF-8");
+                String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode("2","UTF-8");
                 bw.write(post_data);
                 bw.flush();
                 bw.close();
@@ -93,8 +93,8 @@ import java.util.ArrayList;
 
             question=result;
             //Toast.makeText(context, ""+question, Toast.LENGTH_SHORT).show();
-            try {
-
+            try
+            {
                 if(result!=null)
                 {
                     length=load(result);
@@ -106,7 +106,10 @@ import java.util.ArrayList;
                 Toast.makeText(context,"Excep in fetching ", Toast.LENGTH_SHORT).show();
             }
                 HomePage.openTestPb.dismiss();
+            if(quesList.size()>1)
                 context.startActivity(new Intent(context,Main2Activity.class));
+            else
+                Toast.makeText(context, "No Test available with this test id ", Toast.LENGTH_SHORT).show();
 
 
         }

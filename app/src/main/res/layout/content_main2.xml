@@ -24,25 +24,30 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/qTime"
                     android:textSize="14sp"
                     android:text="@string/question"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="22dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"/>
 
                 <TextView
+                    android:id="@+id/aTime"
                     android:textSize="14sp"
                     android:text="Attempted"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"/>
 
             </LinearLayout>
             <TextView
                 android:id="@+id/nameTest"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sadiq Raza"
                 android:lines="2"
-                android:scrollbarSize="30sp"
                 android:textColor="@color/colorPrimary"
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
@@ -54,6 +59,7 @@
                 android:orientation="horizontal"
                 android:layout_alignParentEnd="true"
                 android:layout_width="120dp"
+                android:layout_marginTop="5dp"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -62,6 +68,7 @@
                     android:layout_height="match_parent" />
 
                 <TextView
+                    android:id="@+id/totalTime"
                     android:text="00:00"
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
@@ -78,11 +85,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+
                     android:text="@string/current_time"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
 
                 <TextView
+                    android:id="@+id/currTime"
                     android:text="00:00"
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
@@ -127,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:justificationMode="inter_word"
                     android:maxWidth="450dp"
-                    android:text="eg"
+                    android:text="All The Best"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 

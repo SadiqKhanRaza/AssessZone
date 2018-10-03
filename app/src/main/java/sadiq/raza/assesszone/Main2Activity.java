@@ -1,7 +1,9 @@
 package sadiq.raza.assesszone;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -12,12 +14,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static java.lang.String.format;
 import static  sadiq.raza.assesszone.HomePage.testBackgroundTask;
 
 import java.util.ArrayList;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
     RadioButton rb1,rb2,rb3,rb4;
+    TextView qTime,aTime,totalTime,currTime;
     RadioGroup radioGroup;
     String name;
     private int i=0,length;
@@ -45,8 +50,14 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         prev.setOnClickListener(this);
         clear.setOnClickListener(this);
 
+        qTime=findViewById(R.id.qTime);
+        aTime=findViewById(R.id.aTime);
+        totalTime=findViewById(R.id.totalTime);
+        currTime=findViewById(R.id.currTime);
+        currTime.setText("45:00");
+
         radioGroup=findViewById(R.id.radioGroup);
-        name = new HomePage().s_name;
+        name =HomePage.s_name;
         tv_name = findViewById(R.id.nameTest);
         tv_ques = findViewById(R.id.qText);
         tv_name.setText(name);
@@ -55,6 +66,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         al = testBackgroundTask.getQuestion();
         Log.e("sssss","as"+al.size()+"  "+al);
         length=testBackgroundTask.getLength();
+        qTime.setText("Questions 1/"+length);
         responseArray=new int[length];
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -97,7 +109,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Start Test")
+                .setMessage("Do not move from this activity otherwise test will be closed\n\n\t\tStart Test")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -109,6 +121,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         tv_ques.setText(Html.fromHtml(s.getQues()));
                         options=s.getOption();
                         setOption(options);
+                        qTime.setText("Questions "+(i+1)+"/"+length);
+                        aTime.setText(format("Attempted %d", questionAttempted()));
                         Log.e("s", "" + al.size() + "  " + al);
                     }
                 })
@@ -137,21 +151,66 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         {
             case  R.id.next:
             {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent();
+                        intent.setAction("CLOSE_SIGNUP");
+                        sendBroadcast(intent);
+                    }
+                }, 3500);
                 prev.setEnabled(true);
-                if(i>=length-1)
+
+                if(i==length-1)
                 {
-                    next.setEnabled(false);
+                    AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(
+                            Main2Activity.this);
+
+                    alertDialogBuilder2.setTitle("Submit Test");
+
+                    // set dialog message
+                    alertDialogBuilder2.setMessage("Are you sure you want to submit");
+                    alertDialogBuilder2.setCancelable(false);
+                    alertDialogBuilder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // if this button is clicked, close
+                            // current activity
+                            //length = al.size();
+                            int ans=findScore();
+                            Toast.makeText(Main2Activity.this, "Submitted Successfully : "+ans, Toast.LENGTH_SHORT).show();
+                            dialog.cancel();
+                            finish();
+                        }
+
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alertDialog2=alertDialogBuilder2.create();
+                    alertDialog2.show();
                 }
-                else
+                else if(i<length-1)
                     {
+                        rb1.setChecked(false);
+                        rb2.setChecked(false);
+                        rb3.setChecked(false);
+                        rb4.setChecked(false);
                         //next.setEnabled(true);
                         //Log.e("AAAAAAAAAAAAA", "01 i l "+i+"  "+length);
+                        next.setText(R.string.next);
                         i++;
                         s=al.get(i);
 
                         tv_ques.setText(Html.fromHtml((s.getQues())));
                         options=s.getOption();
                         setOption(options);
+                        qTime.setText("Questions "+(i+1)+"/"+length);
+                        aTime.setText(format("Attempted %d", questionAttempted()));
                         if(responseArray[i]!=0)
                         {
                             if(responseArray[i]==1)
@@ -163,12 +222,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                             else if(responseArray[i]==4)
                                 rb4.setChecked(true);
                         }
-                        else
+
+                        if(i>=length-1)
                         {
-                            rb1.setChecked(false);
-                            rb2.setChecked(false);
-                            rb3.setChecked(false);
-                            rb4.setChecked(false);
+                            next.setText(R.string.submit);
                         }
                     Log.e("AAAAAAAAAAAAA", "01 i l "+i+"  "+length);
 
@@ -177,6 +234,15 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             }
             case R.id.prev:
             {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent();
+                        intent.setAction("CLOSE_SIGNUP");
+                        sendBroadcast(intent);
+                    }
+                }, 3500);
                 next.setEnabled(true);
                 if(i<1)
                 {
@@ -191,6 +257,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     tv_ques.setText(Html.fromHtml(s.getQues()));
                     options=s.getOption();
                     setOption(options);
+                    qTime.setText("Questions "+(i+1)+"/"+length);
+                    aTime.setText(format("Attempted %d", questionAttempted()));
                     if(responseArray[i]!=0)
                     {
                         if(responseArray[i]==1)
@@ -236,8 +304,39 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        HomePage.openTestPb.dismiss();
+        Toast.makeText(this, "Not Allowed to go back", Toast.LENGTH_SHORT).show();
+        //HomePage.openTestPb.dismiss();
     }
 
+    @Override
+    protected void onPause() {
+        finish();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        finish();
+        super.onRestart();
+    }
+    private  int questionAttempted()
+    {
+        int count=0;
+        for(int i=0;i<length;i++)
+        {
+            if(responseArray[i]!=0)
+                count++;
+        }
+        return count;
+    }
+    private int findScore()
+    {
+        int ans=0;
+        for(int i=0;i<length;i++)
+        {
+            if(responseArray[i]!=0)
+                ans++;
+        }
+        return ans;
+    }
 }

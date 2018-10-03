@@ -30,7 +30,7 @@ public class HomePage extends AppCompatActivity
     TextView navName,navEmail;
     static TestBackgroundTask testBackgroundTask;
     ImageView imageView ;
-    String s_name,s_email;
+    static String s_name,s_email;
     ProgressBar progressBar;
     CardView cardView;
     AlertDialog.Builder builder;
@@ -61,12 +61,15 @@ public class HomePage extends AppCompatActivity
         int imageResource = getResources().getIdentifier(uri, "drawable", this.getPackageName());
         imageView.setImageResource(imageResource);
 
-        s_name=extras.getString("myStr1").toString();
-        s_email=extras.getString("myStr2").toString();
+        assert extras != null;
+        s_name=extras.getString("myStr1");
+        s_email=extras.getString("myStr2");
         navName = view.findViewById(R.id.navName);
         navEmail=view.findViewById(R.id.navEmail);
-        navName.setText("   "+s_name);
-        navEmail.setText("   "+s_email);
+        s_name="   "+s_name;
+        s_email="   "+s_email;
+        navName.setText(s_name);
+        navEmail.setText(s_email);
         openTestPb=new ProgressDialog(HomePage.this);
         openTestPb.setMessage("Pleae Wait...");
 
