@@ -57,6 +57,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         currTime.setText("45:00");
 
         radioGroup=findViewById(R.id.radioGroup);
+        radioGroup.clearCheck();
         name =HomePage.s_name;
         tv_name = findViewById(R.id.nameTest);
         tv_ques = findViewById(R.id.qText);
@@ -72,30 +73,20 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int index) {
-                switch (index)
-                {
-                    case R.id.opt1:
-                    {
-                        responseArray[i]=1;
-                        break;
-                    }
-                    case R.id.opt2:
-                    {
-                        responseArray[i]=2;
-                        break;
-                    }
-                    case R.id.opt3:
-                    {
-                         responseArray[i]=3;
-                        break;
-                    }
-                    case R.id.opt4:
-                    {
-                        responseArray[i]=4;
-                        break;
-                    }
+
+                if (rb1.isChecked() == true){
+                    responseArray[i]=1;
+                }else if (rb2.isChecked() == true){
+                    responseArray[i]=2;
+
+                }else if (rb3.isChecked() == true){
+                    responseArray[i]=3;
+
+                }else if (rb4.isChecked() == true){
+                    responseArray[i]=4;
 
                 }
+
             }
         });
 
@@ -152,15 +143,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         {
             case  R.id.next:
             {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent();
-                        intent.setAction("CLOSE_SIGNUP");
-                        sendBroadcast(intent);
-                    }
-                }, 3500);
+
                 prev.setEnabled(true);
 
                 if(i==length-1)
@@ -179,6 +162,11 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                             // current activity
                             //length = al.size();
                             int ans=findScore();
+                            StringBuilder sb = new StringBuilder("");
+                            int ansArr[]=getAnswer();
+                            for(int j=0;j<length;j++)
+                                sb.append(" ").append(ansArr[j]);
+                            Log.e("response: ",sb.toString());
                             Toast.makeText(Main2Activity.this, "Submitted Successfully : "+ans, Toast.LENGTH_SHORT).show();
                             dialog.cancel();
                             finish();
@@ -197,22 +185,21 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 }
                 else if(i<length-1)
                     {
-                        rb1.setChecked(false);
-                        rb2.setChecked(false);
-                        rb3.setChecked(false);
-                        rb4.setChecked(false);
                         //next.setEnabled(true);
                         //Log.e("AAAAAAAAAAAAA", "01 i l "+i+"  "+length);
                         next.setText(R.string.next);
                         i++;
+
                         s=al.get(i);
 
                         tv_ques.setText(Html.fromHtml((s.getQues())));
                         options=s.getOption();
+
                         setOption(options);
                         qTime.setText("Questions "+(i+1)+"/"+length);
                         aTime.setText(format("Attempted %d", questionAttempted()));
-                        if(responseArray[i]!=0)
+                        radioGroup.clearCheck();
+                        if(responseArray != null && responseArray[i]!=0)
                         {
                             if(responseArray[i]==1)
                                 rb1.setChecked(true);
@@ -235,15 +222,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             }
             case R.id.prev:
             {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent();
-                        intent.setAction("CLOSE_SIGNUP");
-                        sendBroadcast(intent);
-                    }
-                }, 3500);
+
                 next.setEnabled(true);
                 if(i==length-1)
                     next.setText(R.string.next);
@@ -260,7 +239,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     tv_ques.setText(Html.fromHtml(s.getQues()));
                     options=s.getOption();
                     setOption(options);
-                    qTime.setText("Questions "+(i+1)+"/"+length);
+                    qTime.setText(new StringBuilder().append("Questions ").append(i + 1).append("/").append(length).toString());
                     aTime.setText(format("Attempted %d", questionAttempted()));
                     if(responseArray[i]!=0)
                     {
@@ -279,10 +258,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             case R.id.clear:
             {
                 responseArray[i]=0;
-                rb1.setChecked(false);
-                rb2.setChecked(false);
-                rb3.setChecked(false);
-                rb4.setChecked(false);
+                radioGroup.clearCheck();
                 StringBuilder sb = new StringBuilder("");
                 for(int j=0;j<length;j++)
                     sb.append(" ").append(responseArray[j]);

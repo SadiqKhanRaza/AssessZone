@@ -61,7 +61,8 @@
                 android:drawableStart="@drawable/ic_tag_faces_black_24dp"
                 android:elevation="4dp"
                 android:hint="Reg No."
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:inputType="text"/>
         </android.support.v7.widget.CardView>
 
 
@@ -82,6 +83,7 @@
                 android:background="@null"
                 android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:hint="Password"
+                android:maxLines="1"
                 android:inputType="textPassword" />
 
         </android.support.v7.widget.CardView>
