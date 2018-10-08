@@ -129,27 +129,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/visi"
         app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintStart_toStartOf="@+id/relativeLayout2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.795" />
 
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
+    <TextView
+        android:id="@+id/fPass"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/visi"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/fPass"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:text="  Forgot\nPassword ?"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
-    </RelativeLayout>
+        android:layout_marginTop="8dp"
+        android:text="  Forgot\nPassword ?"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.808" />
 
 </android.support.constraint.ConstraintLayout>

@@ -74,15 +74,15 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int index) {
 
-                if (rb1.isChecked() == true){
+                if (rb1.isChecked()){
                     responseArray[i]=1;
-                }else if (rb2.isChecked() == true){
+                }else if (rb2.isChecked()){
                     responseArray[i]=2;
 
-                }else if (rb3.isChecked() == true){
+                }else if (rb3.isChecked()){
                     responseArray[i]=3;
 
-                }else if (rb4.isChecked() == true){
+                }else if (rb4.isChecked()){
                     responseArray[i]=4;
 
                 }
