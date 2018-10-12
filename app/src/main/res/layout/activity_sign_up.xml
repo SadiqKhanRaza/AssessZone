@@ -19,11 +19,11 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:background="#ede1ed"
-        android:alpha="0.9">
+        android:alpha="0.98">
 
 
         <ImageView
-            android:background="@drawable/brain"
+            android:background="@drawable/zenith_pshycological_services"
             android:layout_width="140dp"
             android:layout_height="80dp"
             android:layout_marginBottom="24dp"
@@ -40,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
+                android:textColorHint="#000"
                 android:hint="Name" />
         </android.support.design.widget.TextInputLayout>
 
@@ -53,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:hint="College" />
         </android.support.design.widget.TextInputLayout>
 
@@ -78,6 +79,7 @@
             <EditText android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="#000"
                 android:inputType="textEmailAddress"
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
@@ -92,6 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:textColorHint="#000"
                 android:hint="Set Password"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -104,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:textColorHint="#000"
                 android:hint="Confirm Password"/>
         </android.support.design.widget.TextInputLayout>
 

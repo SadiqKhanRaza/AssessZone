@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     CardView logIn;
-    TextView reg;
+    TextView reg,forgotPass;
     EditText lreg_no,lpassword;
    static ProgressDialog mProgressBar;
     
@@ -26,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         lreg_no=findViewById(R.id.uname);
         lpassword=findViewById(R.id.upass);
         mProgressBar= new ProgressDialog(this);
+        forgotPass=findViewById(R.id.fPass);
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Service Not Available yet", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,11 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     backgroundTask.execute(type,reg_no,password);
                     mProgressBar.show();
                 }
-                // BackgTask bt =new BackgTask();
-                ///callPage1();
-              // Toast.makeText(getApplicationContext(),"Hi There "+BackgroundTask.sname+" id :  "+BackgroundTask.reg_id, Toast.LENGTH_SHORT).show();
 
-               // getJSON("http://192.168.43.41/login.php");
             }
         });
 

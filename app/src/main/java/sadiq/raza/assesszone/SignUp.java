@@ -31,7 +31,6 @@ public class SignUp extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         setContentView(R.layout.activity_sign_up);
-        getSupportActionBar().hide();
         et_name=findViewById(R.id.name);
         et_email=findViewById(R.id.email);
         et_password=findViewById(R.id.password);

@@ -2,6 +2,7 @@ package sadiq.raza.assesszone;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
      */
     public class TestBackgroundTask extends AsyncTask<String,Void,String> {
         Context context;
+        int length;
         AlertDialog alertDialog;
         ArrayList<MyDataStructure> quesList = new ArrayList<>();
         public String question;
@@ -51,7 +53,7 @@ import java.util.ArrayList;
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream=httpURLConnection.getOutputStream();
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode("27","UTF-8");
+                String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode("2","UTF-8");
                 bw.write(post_data);
                 bw.flush();
                 bw.close();
@@ -82,27 +84,34 @@ import java.util.ArrayList;
         @Override
         protected void onPreExecute() {
 
-
+        HomePage.openTestPb.show();
+        HomePage.openTestPb.setCancelable(false);
         }
 
 
         @Override
         protected void onPostExecute(String result) {
+
             question=result;
             //Toast.makeText(context, ""+question, Toast.LENGTH_SHORT).show();
-            try {
-
+            try
+            {
                 if(result!=null)
                 {
-                    load(result);
-                    Toast.makeText(context, ""+result, Toast.LENGTH_SHORT).show();
+                    length=load(result);
 
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                //Toast.makeText(context,"Excep in fetching ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Excep in fetching ", Toast.LENGTH_SHORT).show();
             }
+                HomePage.openTestPb.dismiss();
+            if(quesList.size()>1)
+                context.startActivity(new Intent(context,Main2Activity.class));
+            else
+                Toast.makeText(context, "No Test available with this test id ", Toast.LENGTH_SHORT).show();
+
 
         }
 
@@ -120,7 +129,7 @@ import java.util.ArrayList;
         protected void onCancelled() {
             super.onCancelled();
         }
-        private String load(String json) throws JSONException {
+        private int load(String json) throws JSONException {
            // Log.e("AAAAAAAAAA,", json);
             JSONArray arr = new JSONArray(json);
             for (int i=0; i<arr.length(); i++)
@@ -139,7 +148,7 @@ import java.util.ArrayList;
 
                     JSONObject a=new JSONObject(ans);
                     String answer= a.getString("ans1");
-                    Toast.makeText(context, "" +question, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "" +question, Toast.LENGTH_SHORT).show();
                     //Log.e("Dsd",question+"\n"+option1+" "+option2+" "+option3+" "+option4+" " +answer);
                     ArrayList<String > optionAl = new ArrayList<>();
                     optionAl.add(option1);
@@ -152,8 +161,12 @@ import java.util.ArrayList;
             }
 //            Toast.makeText(context, ""+jsonArray, Toast.LENGTH_SHORT).show();
 
-            return  null;
+            return  quesList.size();
 
+        }
+        public int getLength()
+        {
+            return length;
         }
     public ArrayList<MyDataStructure> getQuestion()
     {
