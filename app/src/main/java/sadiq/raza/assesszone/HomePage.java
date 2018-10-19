@@ -153,12 +153,18 @@ public class HomePage extends AppCompatActivity
             testBackgroundTask.execute();
 
         } else if (id == R.id.result) {
-            Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
+            AvailableTestBt test=new AvailableTestBt(HomePage.this);
+            test.execute();
+            //Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.profile) {
+            ScoreBackgroundTask score= new ScoreBackgroundTask(HomePage.this);
+            score.execute();
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_share) {
+            ShowResult showResult= new ShowResult(HomePage.this);
+            showResult.execute();
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {

@@ -53,7 +53,8 @@ import java.util.ArrayList;
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream=httpURLConnection.getOutputStream();
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode("2","UTF-8");
+                String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode("14" +
+                        "","UTF-8");
                 bw.write(post_data);
                 bw.flush();
                 bw.close();
@@ -109,8 +110,8 @@ import java.util.ArrayList;
                 HomePage.openTestPb.dismiss();
             if(quesList.size()>1)
                 context.startActivity(new Intent(context,Main2Activity.class));
-            else
-                Toast.makeText(context, "No Test available with this test id ", Toast.LENGTH_SHORT).show();
+            //else
+              //  Toast.makeText(context, "No Test available with this test id ", Toast.LENGTH_SHORT).show();
 
 
         }

@@ -1,11 +1,17 @@
 package sadiq.raza.assesszone;
 
+
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Handler;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,41 +29,35 @@ import java.net.URLEncoder;
  * Created by Sadiq on 3/11/2018.
  */
 
-public class BackgroundTask2 extends AsyncTask<String,Void,String> {
+public class ShowResult extends AsyncTask<String,Void,String> {
     Context context;
+    AlertDialog alertDialog;
 
+    public String name;
+    public String email;
+    public String jsonString;
+    String reg_id ="11505615";
+    String test_id="14";
+    ProgressDialog pdd;
 
-    public BackgroundTask2(Context context) {
+    public ShowResult(Context context) {
         this.context=context;
     }
 
     @Override
     protected String doInBackground(String... param) {
 
-        String type =param[0];
-        String register_url="https://assesszone.000webhostapp.com/client/register.php";
-
-
-//REGISTER
-        if(type.equals("register")) try {
-            String name=param[1];
-            String reg=param[2];
-            String college=param[3];
-            String email=param[4];
-            String password=param[5];
-
-            URL url = new URL(register_url);
+        String login_url="https://assesszone.000webhostapp.com/client/showResult.php";
+        try {
+            URL url = new URL(login_url);
             HttpURLConnection httpURLConnection=(HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-            String post_data= URLEncoder.encode("name","UTF-8")+"="+ URLEncoder.encode(name,"UTF-8")+"&"+
-                    URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg,"UTF-8")+"&"+
-                    URLEncoder.encode("college","UTF-8")+"="+ URLEncoder.encode(college,"UTF-8")+"&"+
-                    URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(email,"UTF-8")+"&"+
-                    URLEncoder.encode("password","UTF-8")+"="+ URLEncoder.encode(password,"UTF-8");
+            String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8")+"&"+
+                    URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode(test_id,"UTF-8");
             bw.write(post_data);
             bw.flush();
             bw.close();
@@ -82,33 +82,23 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
-
-
     @Override
     protected void onPreExecute() {
+        pdd=new ProgressDialog(context);
+        pdd.setCancelable(false);
+        pdd.setMessage("Fetching scores");
+        pdd.show();
 
     }
 
     @Override
     protected void onPostExecute(String result) {
-        Log.e("res",result);
-            SignUp.progressDialog.dismiss();
-        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent();
-                intent.setAction("CLOSE_SIGNUP");
-                context.sendBroadcast(intent);
-            }
-        }, 1500);
 
-
+        Log.e("Your Score is ",result);
+        pdd.dismiss();
     }
 
     @Override
@@ -125,5 +115,6 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
     protected void onCancelled() {
         super.onCancelled();
     }
+
 
 }

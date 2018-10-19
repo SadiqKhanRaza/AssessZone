@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     CardView logIn;
     TextView reg,forgotPass;
     EditText lreg_no,lpassword;
+    static String reg_no;
    static ProgressDialog mProgressBar;
     
     @Override
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 mProgressBar.setCancelable(false);
 
 
-                String reg_no=lreg_no.getText().toString();
+                 reg_no=lreg_no.getText().toString();
                 String password =lpassword.getText().toString();
                 String type="login";
                 if(reg_no.length()<3||password.length()<3)

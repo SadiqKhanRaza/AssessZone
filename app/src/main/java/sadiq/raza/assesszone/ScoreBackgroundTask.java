@@ -2,10 +2,12 @@ package sadiq.raza.assesszone;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -34,6 +36,10 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
     public String name;
     public String email;
     public String jsonString;
+    String reg_id ="11505615";
+    String test_id="14";
+    String scores ="100";
+    ProgressDialog pdd;
 
     public ScoreBackgroundTask(Context context) {
         this.context=context;
@@ -42,11 +48,8 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... param) {
 
-        String type =param[0];
-        String login_url="https://sadiqkhanraza.000webhostapp.com/login.php";
-        if(type.equals("login")) try {
-            String reg_id=param[1];
-            String u_password=param[2];
+        String login_url="https://assesszone.000webhostapp.com/client/testScores.php";
+         try {
             URL url = new URL(login_url);
             HttpURLConnection httpURLConnection=(HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
@@ -55,7 +58,8 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8")+"&"+
-                    URLEncoder.encode("u_password","UTF-8")+"="+ URLEncoder.encode(u_password,"UTF-8");
+                    URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode(test_id,"UTF-8")+"&"+
+                    URLEncoder.encode("scores","UTF-8")+"="+ URLEncoder.encode(scores,"UTF-8");
             bw.write(post_data);
             bw.flush();
             bw.close();
@@ -85,13 +89,18 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
+        pdd=new ProgressDialog(context);
+        pdd.setCancelable(false);
+        pdd.setMessage("Uploading scores");
+        pdd.show();
 
     }
 
     @Override
     protected void onPostExecute(String result) {
 
-
+    Log.e("result",result);
+    pdd.dismiss();
     }
 
     @Override

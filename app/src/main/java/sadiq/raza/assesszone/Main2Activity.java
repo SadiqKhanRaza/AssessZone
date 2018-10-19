@@ -158,16 +158,14 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     alertDialogBuilder2.setCancelable(false);
                     alertDialogBuilder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // if this button is clicked, close
-                            // current activity
-                            //length = al.size();
-                            int ans=findScore();
+
+                            /*int ans=findScore();
                             StringBuilder sb = new StringBuilder("");
                             int ansArr[]=getAnswer();
                             for(int j=0;j<length;j++)
                                 sb.append(" ").append(ansArr[j]);
                             Log.e("response: ",sb.toString());
-                            Toast.makeText(Main2Activity.this, "Submitted Successfully : "+ans, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Main2Activity.this, "Submitted Successfully : "+0, Toast.LENGTH_SHORT).show();*/
                             dialog.cancel();
                             finish();
                         }
@@ -308,7 +306,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
         return count;
     }
-    private int findScore()
+    /*private int findScore()
     {
         int arr[]=getAnswer();
         int ans=0;
@@ -327,5 +325,5 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             arr[i]=Integer.parseInt(al.get(i).getAns());
         }
         return arr;
-    }
+    }*/
 }
