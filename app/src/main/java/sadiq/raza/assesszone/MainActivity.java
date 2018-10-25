@@ -1,7 +1,10 @@
 package sadiq.raza.assesszone;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -15,8 +18,9 @@ public class MainActivity extends AppCompatActivity {
     TextView reg,forgotPass;
     EditText lreg_no,lpassword;
     static String reg_no;
-   static ProgressDialog mProgressBar;
-    
+    ConnectivityManager connectivityManager;
+  // static ProgressDialog mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         logIn=findViewById(R.id.login);
         lreg_no=findViewById(R.id.uname);
         lpassword=findViewById(R.id.upass);
-        mProgressBar= new ProgressDialog(this);
+        //mProgressBar= new ProgressDialog(this);
         forgotPass=findViewById(R.id.fPass);
+        connectivityManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         forgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                // mProgressBar.setCancelable(false);
-
-                mProgressBar.setMessage("Authenticating your login..");
-                mProgressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                mProgressBar.setCancelable(false);
+                if(!isConnected())
+                {
+                    Toast.makeText(MainActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
 
                  reg_no=lreg_no.getText().toString();
@@ -55,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     BackgroundTask backgroundTask = new BackgroundTask(MainActivity.this);
                     backgroundTask.execute(type,reg_no,password);
-                    mProgressBar.show();
                 }
 
             }
@@ -64,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isConnected())
+                {
+                    Toast.makeText(MainActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent i = new Intent(MainActivity.this,SignUp.class);
                 startActivity(i);
             }
@@ -73,7 +82,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    public boolean isConnected()
+    {
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+        if(networkInfo!=null && networkInfo.isConnected())
+        {
+            if(networkInfo.getType()==ConnectivityManager.TYPE_WIFI ||
+                    networkInfo.getType()==ConnectivityManager.TYPE_MOBILE)
+            return true;
+        }
+        return  false;
+    }
 
 
 }

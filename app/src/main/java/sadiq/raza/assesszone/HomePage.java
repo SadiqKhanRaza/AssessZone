@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,14 +29,14 @@ import java.util.ArrayList;
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView navName,navEmail;
-    static TestBackgroundTask testBackgroundTask;
     ImageView imageView ;
     static String s_name,s_email;
     ProgressBar progressBar;
     CardView cardView;
-    AlertDialog.Builder builder;
+    //AlertDialog.Builder builder;
     ArrayList<String> myList;
     static ProgressDialog openTestPb;
+    private ArrayList<AvailableTestDetails> al;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,22 +82,18 @@ public class HomePage extends AppCompatActivity
 
         myList = new ArrayList<>();
 
-        myList.add("Test 1");
-        myList.add("Test 2");
-        myList.add("Test 3");
-        myList.add("Test 4");
-        myList.add("Test 5");
-        myList.add("Test 6");
-        myList.add("Test 7");
+        //myList.add("Test 1");
+        //myList.add("sdsds");
 
 
-        builder = new AlertDialog.Builder((HomePage.this));
+
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                openTestList();
+                //openTestList();
+                new AvailableTestBt(HomePage.this).execute();
 
             }
         });
@@ -146,16 +143,12 @@ public class HomePage extends AppCompatActivity
             // Handle the camera action
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.attepmt) {
-            //Intent intent = new Intent(HomePage.this,Main2Activity.class);
-            //intent.putExtra("nameValue",s_name);
-            //startActivity(intent);
-            testBackgroundTask= new TestBackgroundTask(HomePage.this);
-            testBackgroundTask.execute();
+            new AvailableTestBt(HomePage.this).execute();
 
         } else if (id == R.id.result) {
-            AvailableTestBt test=new AvailableTestBt(HomePage.this);
-            test.execute();
-            //Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
+            //AvailableTestBt test=new AvailableTestBt(HomePage.this);
+            //test.execute();
+            Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.profile) {
             ScoreBackgroundTask score= new ScoreBackgroundTask(HomePage.this);
@@ -176,25 +169,5 @@ public class HomePage extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void openTestList()
-    {
-        LayoutInflater layoutInflater = getLayoutInflater();
-        View newView = layoutInflater.inflate(R.layout.testlist,null);
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
-        builder.setView(newView);
-
-        ListView listView = newView.findViewById(R.id.listView);
-        final AlertDialog alert = builder.create();
-        alert.setTitle("Available Tests");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(HomePage.this,android.R.layout.simple_list_item_1,myList);
-        listView.setAdapter(arrayAdapter);
-        alert.show();
-    }
 }

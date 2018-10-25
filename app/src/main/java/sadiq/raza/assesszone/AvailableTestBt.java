@@ -4,10 +4,19 @@ package sadiq.raza.assesszone;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -25,6 +34,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -34,8 +44,11 @@ import java.util.Map;
 public class AvailableTestBt extends AsyncTask<String,Void,String> {
     Context context;
     ProgressDialog pd ;
-    String test_id,test_name;
-
+    String test_id,test_name,start_date_time,time_allowed;
+    static TestBackgroundTask testBackgroundTask;
+    android.support.v7.app.AlertDialog.Builder builder;
+    private ArrayList<AvailableTestDetails> availableTestDetails = new ArrayList<>();
+    private String testId;
     public AvailableTestBt(Context context) {
         this.context=context;
     }
@@ -52,6 +65,8 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
+             httpURLConnection.setReadTimeout(5000);
+             httpURLConnection.setConnectTimeout(5000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8");
@@ -94,11 +109,14 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.e("Result ", result);
+        Log.e("Available Test ", result);
         try
         {
             if(result!=null)
+            {
                 loadTestDetails(result);
+                openTestList();
+            }
             else
                 Log.e("ss","null");
 
@@ -126,13 +144,80 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
     }
     private void loadTestDetails(String json)throws  JSONException
     {
-        JSONObject jsonObject = new JSONArray(json).getJSONObject(0);//for only one test at zero index
-         test_id=jsonObject.getString("test_id");
-         test_name=jsonObject.getString("test_name");
-        String start_date_time=jsonObject.getString("start_date_time");
-        String time_allowed=jsonObject.getString("time_allowed");
-        Log.e("tes : ",test_id+" "+test_name);
+        JSONArray arr= new JSONArray(json);
+        for(int i=0;i<arr.length();i++)
+        {
+            JSONObject jsonObject = arr.getJSONObject(i);//for only one test at zero index
+            test_id=jsonObject.getString("test_id");
+            test_name=jsonObject.getString("test_name");
+             start_date_time=jsonObject.getString("start_date_time");
+             time_allowed=jsonObject.getString("time_allowed");
+            Log.e("tes : ",test_id+" "+test_name);
+            availableTestDetails.add(new AvailableTestDetails(test_id,test_name,start_date_time,time_allowed));
+        }
     }
 
+    public ArrayList<AvailableTestDetails> getAvailableTestDetails() {
+        return availableTestDetails;
+    }
 
+    private void openTestList()
+    {
+        /*AvailableTestBt test=new AvailableTestBt(HomePage.this);
+        //test.execute();
+        //al=test.getAvailableTestDetails();
+        if(al==null)
+        {
+            Toast.makeText(this, "Empty Test", Toast.LENGTH_SHORT).show();
+            return;
+        }*/
+        builder = new android.support.v7.app.AlertDialog.Builder(context);
+        builder.setCancelable(false);
+        ArrayList<String> myList=new ArrayList<>();
+        for(int i=0;i<availableTestDetails.size();i++)
+        {
+            myList.add(availableTestDetails.get(i).getTest_name());
+            Log.e("NAme",availableTestDetails.get(i).getTest_name());
+        }
+        //LayoutInflater layoutInflater = getLayoutInflater();
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        View newView = layoutInflater.inflate(R.layout.testlist,null);
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                Log.e("Testid ",""+testId);
+            }
+        });
+
+        builder.setView(newView);
+
+        ListView listView = newView.findViewById(R.id.listView);
+        final android.support.v7.app.AlertDialog alert = builder.create();
+        alert.setTitle("Available Tests");
+        ArrayAdapter arrayAdapter = new ArrayAdapter(context,android.R.layout.simple_list_item_activated_1,myList);
+
+
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String testName=adapterView.getItemAtPosition(i).toString();
+                for(int j=0;j<availableTestDetails.size();j++)
+                {
+                    if(testName.equals(availableTestDetails.get(i).getTest_name()))
+                    {
+                        testId=availableTestDetails.get(i).getTest_id();
+                        break;
+                    }
+                }
+                alert.dismiss();
+                testBackgroundTask=new TestBackgroundTask(context,testId);
+                testBackgroundTask.execute();
+                Log.e("clicked",testName+"  dd "+testId);
+            }
+        });
+        alert.show();
+    }
 }

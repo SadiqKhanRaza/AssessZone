@@ -33,8 +33,10 @@ import java.util.ArrayList;
         AlertDialog alertDialog;
         ArrayList<MyDataStructure> quesList = new ArrayList<>();
         public String question;
-
-        public TestBackgroundTask(Context context) {
+        private String testId;
+        public TestBackgroundTask(Context context,String testId)
+        {
+            this.testId=testId;
             this.context=context;
         }
 
@@ -51,9 +53,11 @@ import java.util.ArrayList;
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setDoInput(true);
+                httpURLConnection.setReadTimeout(10000);
+                httpURLConnection.setConnectTimeout(10000);
                 OutputStream outputStream=httpURLConnection.getOutputStream();
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode("14" +
+                String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode(testId +
                         "","UTF-8");
                 bw.write(post_data);
                 bw.flush();
@@ -105,7 +109,7 @@ import java.util.ArrayList;
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(context,"Excep in fetching ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"No Questions Available ", Toast.LENGTH_SHORT).show();
             }
                 HomePage.openTestPb.dismiss();
             if(quesList.size()>1)

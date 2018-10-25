@@ -1,12 +1,15 @@
 package sadiq.raza.assesszone;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +22,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -33,7 +37,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     public String name;
     public String email;
     public String jsonString;
-
+    ProgressDialog progressDialog;
     public BackgroundTask(Context context) {
         this.context=context;
     }
@@ -51,6 +55,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
+            httpURLConnection.setReadTimeout(4000);
+            httpURLConnection.setConnectTimeout(4000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8")+"&"+
@@ -74,16 +80,28 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             return result;
 
 
-        } catch (MalformedURLException e) {
+        }
+        catch (ConnectTimeoutException e)
+        {
+            Log.e("Time out ",e.toString());
+        }
+
+        catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+           Log.e("Time out ",e.toString());
         }
         return null;
     }
 
     @Override
     protected void onPreExecute() {
+        progressDialog=new ProgressDialog(context);
+        progressDialog.setMessage("Authenticating your login..");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         alertDialog= new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Login Status");
@@ -94,13 +112,12 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
         try {
-            MainActivity.mProgressBar.dismiss();
+                progressDialog.dismiss();
 
-
-            alertDialog.setMessage(result);
-           alertDialog.show();
             if(result!=null)
             {
+                alertDialog.setMessage(result);
+                alertDialog.show();
                 load(result);
                 Intent intent =new Intent(context,HomePage.class);
                 Bundle extras=new Bundle();
@@ -125,6 +142,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onCancelled(String aVoid) {
+        Log.e("time " ,"timeout");
         super.onCancelled(aVoid);
     }
 
@@ -143,6 +161,5 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 return  null;
 
     }
-
 
 }

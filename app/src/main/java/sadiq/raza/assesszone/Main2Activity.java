@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import static java.lang.String.format;
-import static  sadiq.raza.assesszone.HomePage.testBackgroundTask;
+import static  sadiq.raza.assesszone.AvailableTestBt.testBackgroundTask;
 
 import java.util.ArrayList;
 
@@ -239,6 +239,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     setOption(options);
                     qTime.setText(new StringBuilder().append("Questions ").append(i + 1).append("/").append(length).toString());
                     aTime.setText(format("Attempted %d", questionAttempted()));
+                    radioGroup.clearCheck();
                     if(responseArray[i]!=0)
                     {
                         if(responseArray[i]==1)

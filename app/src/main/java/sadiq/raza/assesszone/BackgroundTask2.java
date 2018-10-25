@@ -51,6 +51,8 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
+            httpURLConnection.setReadTimeout(6000);
+            httpURLConnection.setConnectTimeout(7000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("name","UTF-8")+"="+ URLEncoder.encode(name,"UTF-8")+"&"+
@@ -95,7 +97,7 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.e("res",result);
+        Log.e("res","j"+result);
             SignUp.progressDialog.dismiss();
         Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         Handler handler = new Handler();

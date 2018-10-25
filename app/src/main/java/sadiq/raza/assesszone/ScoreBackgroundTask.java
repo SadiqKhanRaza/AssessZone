@@ -38,7 +38,7 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
     public String jsonString;
     String reg_id ="11505615";
     String test_id="14";
-    String scores ="100";
+    String scores ="000";
     ProgressDialog pdd;
 
     public ScoreBackgroundTask(Context context) {
@@ -55,6 +55,8 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
+             httpURLConnection.setReadTimeout(7000);
+             httpURLConnection.setConnectTimeout(7000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8")+"&"+
