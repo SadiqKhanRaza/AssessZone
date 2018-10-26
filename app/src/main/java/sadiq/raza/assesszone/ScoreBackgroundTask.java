@@ -55,8 +55,8 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
-             httpURLConnection.setReadTimeout(7000);
-             httpURLConnection.setConnectTimeout(7000);
+             httpURLConnection.setReadTimeout(9000);
+             httpURLConnection.setConnectTimeout(9000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8")+"&"+

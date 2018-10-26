@@ -65,8 +65,8 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
-             httpURLConnection.setReadTimeout(5000);
-             httpURLConnection.setConnectTimeout(5000);
+             httpURLConnection.setReadTimeout(6000);
+             httpURLConnection.setConnectTimeout(6000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8");

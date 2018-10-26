@@ -99,7 +99,7 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result) {
         Log.e("res","j"+result);
             SignUp.progressDialog.dismiss();
-        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

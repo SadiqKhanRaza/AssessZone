@@ -31,7 +31,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     Button next,prev,clear;
     static ArrayList<MyDataStructure> al;
     private ArrayList<String> options;
-    private int responseArray[];
+    private String responseArray[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,22 +68,22 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         Log.e("sssss","as"+al.size()+"  "+al);
         length=testBackgroundTask.getLength();
         qTime.setText("Questions 1/"+length);
-        responseArray=new int[length];
+        responseArray=new String [length];
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int index) {
 
                 if (rb1.isChecked()){
-                    responseArray[i]=1;
+                    responseArray[i]=rb1.getText().toString();
                 }else if (rb2.isChecked()){
-                    responseArray[i]=2;
+                    responseArray[i]=rb2.getText().toString();
 
                 }else if (rb3.isChecked()){
-                    responseArray[i]=3;
+                    responseArray[i]=rb3.getText().toString();
 
                 }else if (rb4.isChecked()){
-                    responseArray[i]=4;
+                    responseArray[i]=rb4.getText().toString();
 
                 }
 
@@ -159,13 +159,13 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     alertDialogBuilder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
 
-                            /*int ans=findScore();
+                            int ans=findScore();
                             StringBuilder sb = new StringBuilder("");
-                            int ansArr[]=getAnswer();
+                            String ansArr[]=getAnswer();
                             for(int j=0;j<length;j++)
                                 sb.append(" ").append(ansArr[j]);
                             Log.e("response: ",sb.toString());
-                            Toast.makeText(Main2Activity.this, "Submitted Successfully : "+0, Toast.LENGTH_SHORT).show();*/
+                            Toast.makeText(Main2Activity.this, "Submitted Successfully : "+ans, Toast.LENGTH_SHORT).show();
                             dialog.cancel();
                             finish();
                         }
@@ -197,15 +197,15 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         qTime.setText("Questions "+(i+1)+"/"+length);
                         aTime.setText(format("Attempted %d", questionAttempted()));
                         radioGroup.clearCheck();
-                        if(responseArray != null && responseArray[i]!=0)
+                        if(responseArray != null && responseArray[i]!=null)
                         {
-                            if(responseArray[i]==1)
+                            if(responseArray[i].equals(rb1.getText().toString()))
                                 rb1.setChecked(true);
-                            else if(responseArray[i]==2)
+                            else if(responseArray[i].equals(rb2.getText().toString()))
                                 rb2.setChecked(true);
-                            else if(responseArray[i]==3)
+                            else if(responseArray[i].equals(rb3.getText().toString()))
                                 rb3.setChecked(true);
-                            else if(responseArray[i]==4)
+                            else if(responseArray[i].equals(rb4.getText().toString()))
                                 rb4.setChecked(true);
                         }
 
@@ -240,15 +240,15 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     qTime.setText(new StringBuilder().append("Questions ").append(i + 1).append("/").append(length).toString());
                     aTime.setText(format("Attempted %d", questionAttempted()));
                     radioGroup.clearCheck();
-                    if(responseArray[i]!=0)
+                    if(responseArray != null && responseArray[i]!=null)
                     {
-                        if(responseArray[i]==1)
+                        if(responseArray[i].equals(rb1.getText().toString()))
                             rb1.setChecked(true);
-                        else if(responseArray[i]==2)
+                        else if(responseArray[i].equals(rb2.getText().toString()))
                             rb2.setChecked(true);
-                        else if(responseArray[i]==3)
+                        else if(responseArray[i].equals(rb3.getText().toString()))
                             rb3.setChecked(true);
-                        else if(responseArray[i]==4)
+                        else if(responseArray[i].equals(rb4.getText().toString()))
                             rb4.setChecked(true);
                     }
                 }
@@ -256,7 +256,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             }
             case R.id.clear:
             {
-                responseArray[i]=0;
+                responseArray[i]=null;
                 radioGroup.clearCheck();
                 StringBuilder sb = new StringBuilder("");
                 for(int j=0;j<length;j++)
@@ -302,29 +302,30 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         int count=0;
         for(int i=0;i<length;i++)
         {
-            if(responseArray[i]!=0)
+            if(responseArray[i]!=null)
                 count++;
         }
         return count;
     }
-    /*private int findScore()
+    private int findScore()
     {
-        int arr[]=getAnswer();
+        String arr[]=getAnswer();
         int ans=0;
         for(int i=0;i<length;i++)
         {
-            if(responseArray[i]==arr[i])
+            Log.e("Res : arr[i] ",responseArray[i]+" : "+arr[i]);
+            if(responseArray[i]!=null && responseArray[i].equals(arr[i]))
                 ans++;
         }
         return ans;
     }
-    private int[] getAnswer()
+    private String[] getAnswer()
     {
-        int arr[]=new int[length];
+        String arr[]=new String[length];
         for(int i=0;i<length;i++)
         {
-            arr[i]=Integer.parseInt(al.get(i).getAns());
+            arr[i]=al.get(i).getAns();
         }
         return arr;
-    }*/
+    }
 }

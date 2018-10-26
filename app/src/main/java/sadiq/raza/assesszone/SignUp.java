@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class SignUp extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
-     EditText et_name,et_email,et_password,et_confirmPassword,et_college,et_regNo;
+     EditText et_name,et_email,et_password,et_confirmPassword,et_college,et_regNo,et_cEmail;
      Button signUpUser;
      TextView linkLogin;
     static ProgressDialog progressDialog ;
@@ -37,6 +37,7 @@ public class SignUp extends AppCompatActivity {
         et_confirmPassword=findViewById(R.id.confirm_password);
         et_college=findViewById(R.id.college);
         et_regNo=findViewById(R.id.reg_no);
+        et_cEmail=findViewById(R.id.confirmEmail);
         signUpUser=findViewById(R.id.btn_signup);
         linkLogin=findViewById(R.id.link_login);
 
@@ -108,6 +109,7 @@ public class SignUp extends AppCompatActivity {
        // String regNo=et_regNo.getText().toString();
         //String college=et_college.getText().toString();
         String email = et_email.getText().toString();
+        String confirmEmail = et_cEmail.getText().toString();
         String password = et_password.getText().toString();
         String confirmPassword = et_confirmPassword.getText().toString();
 
@@ -125,6 +127,14 @@ public class SignUp extends AppCompatActivity {
         } else {
             et_email.setError(null);
         }
+        if(!confirmEmail.equals(email))
+        {
+            et_cEmail.setError("Email did not match");
+            valid =false;
+        }
+        else {
+            et_cEmail.setError(null);
+        }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
             et_password.setError("between 4 and 10 alphanumeric characters");
@@ -132,7 +142,7 @@ public class SignUp extends AppCompatActivity {
         } else {
             et_password.setError(null);
         }
-        if(confirmPassword.equals(password)==false)
+        if(!confirmPassword.equals(password))
         {
             et_confirmPassword.setError("Password did not match");
             valid =false;
