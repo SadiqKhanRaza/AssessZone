@@ -114,6 +114,7 @@ import java.util.ArrayList;
                 HomePage.openTestPb.dismiss();
             if(quesList.size()>1)
                 context.startActivity(new Intent(context,Main2Activity.class));
+
             //else
               //  Toast.makeText(context, "No Test available with this test id ", Toast.LENGTH_SHORT).show();
 
@@ -140,7 +141,7 @@ import java.util.ArrayList;
             for (int i=0; i<arr.length(); i++)
             {
                 JSONArray curr = arr.getJSONArray(i);
-                Log.e("AAkAAAAA "+arr.length()+" " +i, " "+arr.getJSONArray(i)+" he");
+                //Log.e("AAkAAAAA "+arr.length()+" " +i, " "+arr.getJSONArray(i)+" he");
                     String question = curr.getString(0);
                     String optionList = curr.getString(1);
                     String ans = curr.getString(2);
@@ -161,7 +162,7 @@ import java.util.ArrayList;
                     optionAl.add(option3);
                     optionAl.add(option4);
                     quesList.add(new MyDataStructure(question,optionAl,answer));
-                Log.e("size",""+quesList.size()+" "+quesList);
+                //Log.e("size",""+quesList.size()+" "+quesList);
 
             }
 //            Toast.makeText(context, ""+jsonArray, Toast.LENGTH_SHORT).show();
@@ -173,6 +174,7 @@ import java.util.ArrayList;
         {
             return length;
         }
+        public String getTestId(){return  testId;}
     public ArrayList<MyDataStructure> getQuestion()
     {
         return quesList;

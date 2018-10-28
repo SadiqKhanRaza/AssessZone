@@ -1,9 +1,15 @@
 package sadiq.raza.assesszone;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -18,7 +24,19 @@ import android.widget.Toast;
 import static java.lang.String.format;
 import static  sadiq.raza.assesszone.AvailableTestBt.testBackgroundTask;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
     RadioButton rb1,rb2,rb3,rb4;
@@ -29,11 +47,20 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     private  MyDataStructure s;
     TextView tv_name,tv_ques;
     Button next,prev,clear;
+      Button submit;
+      static Context context;
+      static  int ans;
+      static ProgressDialog progressDialog;
     static ArrayList<MyDataStructure> al;
     private ArrayList<String> options;
     private String responseArray[];
+    private long startTime,timeInMilliseconds,updatedTime;
+    private Handler customHandler= new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        context=Main2Activity.this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         rb1=findViewById(R.id.opt1);
@@ -43,12 +70,14 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
         next = findViewById(R.id.next);
         prev = findViewById(R.id.prev);
+        submit = findViewById(R.id.submit);
         prev.setEnabled(false);
         clear = findViewById(R.id.clear);
 
         next.setOnClickListener(this);
         prev.setOnClickListener(this);
         clear.setOnClickListener(this);
+        submit.setOnClickListener(this);
 
         qTime=findViewById(R.id.qTime);
         aTime=findViewById(R.id.aTime);
@@ -69,6 +98,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         length=testBackgroundTask.getLength();
         qTime.setText("Questions 1/"+length);
         responseArray=new String [length];
+
+
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -107,13 +138,15 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         // if this button is clicked, close
                         // current activity
                         //length = al.size();
+                        startTime = SystemClock.uptimeMillis();
+                        customHandler.postDelayed(updateTimerThread, 0);
                         s = al.get(0);
 
                         tv_ques.setText(Html.fromHtml(s.getQues()));
                         options=s.getOption();
                         setOption(options);
-                        qTime.setText("Questions "+(i+1)+"/"+length);
-                        aTime.setText(format("Attempted %d", questionAttempted()));
+                        qTime.setText(getString(R.string.quesByTotal)+(i+1)+"/"+length);
+                        aTime.setText(String.format(Locale.US,"Attempted %d", questionAttempted()));
                         Log.e("s", "" + al.size() + "  " + al);
                     }
                 })
@@ -145,43 +178,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             {
 
                 prev.setEnabled(true);
-
-                if(i==length-1)
-                {
-                    AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(
-                            Main2Activity.this);
-
-                    alertDialogBuilder2.setTitle("Submit Test");
-
-                    // set dialog message
-                    alertDialogBuilder2.setMessage("Are you sure you want to submit");
-                    alertDialogBuilder2.setCancelable(false);
-                    alertDialogBuilder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                            int ans=findScore();
-                            StringBuilder sb = new StringBuilder("");
-                            String ansArr[]=getAnswer();
-                            for(int j=0;j<length;j++)
-                                sb.append(" ").append(ansArr[j]);
-                            Log.e("response: ",sb.toString());
-                            Toast.makeText(Main2Activity.this, "Submitted Successfully : "+ans, Toast.LENGTH_SHORT).show();
-                            dialog.cancel();
-                            finish();
-                        }
-
-                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // if this button is clicked, just close
-                                    // the dialog box and do nothing
-                                    dialog.cancel();
-                                }
-                            });
-
-                    AlertDialog alertDialog2=alertDialogBuilder2.create();
-                    alertDialog2.show();
-                }
-                else if(i<length-1)
+                 if(i<length-1)
                     {
                         //next.setEnabled(true);
                         //Log.e("AAAAAAAAAAAAA", "01 i l "+i+"  "+length);
@@ -211,7 +208,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
                         if(i>=length-1)
                         {
-                            next.setText(R.string.submit);
+                            next.setEnabled(false);
                         }
                     Log.e("AAAAAAAAAAAAA", "01 i l "+i+"  "+length);
 
@@ -237,7 +234,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     tv_ques.setText(Html.fromHtml(s.getQues()));
                     options=s.getOption();
                     setOption(options);
-                    qTime.setText(new StringBuilder().append("Questions ").append(i + 1).append("/").append(length).toString());
+                    qTime.setText(new StringBuilder().append("Questions ").append(i + 1).append("/")
+                            .append(length).toString());
                     aTime.setText(format("Attempted %d", questionAttempted()));
                     radioGroup.clearCheck();
                     if(responseArray != null && responseArray[i]!=null)
@@ -262,6 +260,47 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 for(int j=0;j<length;j++)
                     sb.append(" ").append(responseArray[j]);
                 Log.e("response: ",sb.toString());
+                break;
+            }
+            case R.id.submit:
+            {
+                AlertDialog.Builder alertDialogBuilder2 = new AlertDialog.Builder(
+                        Main2Activity.this);
+
+                alertDialogBuilder2.setTitle("Submit Test");
+
+                // set dialog message
+                alertDialogBuilder2.setMessage("Are you sure you want to submit");
+                alertDialogBuilder2.setCancelable(false);
+                alertDialogBuilder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                         ans=findScore();
+                        /*StringBuilder sb = new StringBuilder("");
+                        String ansArr[]=getAnswer();
+                        for(int j=0;j<length;j++)
+                            sb.append(" ").append(ansArr[j]);
+                        Log.e("response: ",sb.toString());*/
+                        //ScoreBackgroundTask sc=new ScoreBackgroundTask(Main2Activity.this,
+                        // testBackgroundTask.getTestId(),String.valueOf(ans));
+                        //sc.execute();
+                        new ScoreBackgroundTask2().execute();
+                        //Toast.makeText(Main2Activity.this, "Submitted Successfully : "+ans, Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                        //progressDialog.dismiss();
+                        //    finish();
+                    }
+
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog2=alertDialogBuilder2.create();
+                alertDialog2.show();
                 break;
             }
         }
@@ -328,4 +367,120 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
         return arr;
     }
+
+    private Runnable updateTimerThread = new Runnable() {
+        public void run() {
+
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+
+            updatedTime =timeInMilliseconds;
+
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            secs = secs % 60;
+            currTime.setText("" + mins + " : "
+                    + String.format("%02d", secs));
+            customHandler.postDelayed(this, 0);
+        }
+
+    };
+
+}
+
+class ScoreBackgroundTask2 extends AsyncTask<String,Void,String> {
+    android.app.AlertDialog alertDialog;
+//
+//    public String name;
+//    public String email;
+//    public String jsonString;
+    String reg_id ="6008";
+    String test_id;
+    //String scores;
+     ProgressDialog progressDialog;
+    @Override
+    protected String doInBackground(String... param) {
+        test_id=testBackgroundTask.getTestId();
+
+
+        String login_url="https://assesszone.000webhostapp.com/client/testScores.php";
+        try {
+            URL url = new URL(login_url);
+            HttpURLConnection httpURLConnection=(HttpURLConnection)url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.setReadTimeout(9000);
+            httpURLConnection.setConnectTimeout(9000);
+            OutputStream outputStream=httpURLConnection.getOutputStream();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+            Log.e("sent",MainActivity.reg_no+" "+test_id+" "+Main2Activity.ans);
+            String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(MainActivity.reg_no,"UTF-8")+"&"+
+                    URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode(test_id,"UTF-8")+"&"+
+                    URLEncoder.encode("scores","UTF-8")+"="+ URLEncoder.encode(String.valueOf(Main2Activity.ans),"UTF-8");
+            bw.write(post_data);
+            bw.flush();
+            bw.close();
+            outputStream.close();
+
+            InputStream inputStream=httpURLConnection.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+            String result="";
+            String line="";
+            while((line=br.readLine())!=null)
+            {
+                result+=line;
+            }
+            br.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+            return result;
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressDialog=new ProgressDialog(Main2Activity.context);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Uploading scores");
+        progressDialog.show();
+
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        progressDialog.dismiss();
+        Log.e("result","s"+result);
+        ((Activity)Main2Activity.context).finish();
+
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+    }
+
+    @Override
+    protected void onCancelled(String aVoid) {
+
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }super.onCancelled(aVoid);
+    }
+
+    @Override
+    protected void onCancelled() {
+
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }super.onCancelled();
+    }
+
+
 }

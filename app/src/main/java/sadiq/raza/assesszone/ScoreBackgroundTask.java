@@ -1,6 +1,7 @@
 package sadiq.raza.assesszone;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,12 +37,15 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
     public String name;
     public String email;
     public String jsonString;
-    String reg_id ="11505615";
-    String test_id="14";
-    String scores ="000";
-    ProgressDialog pdd;
+    String reg_id ="6008";
+    String test_id;
+    String scores;
+    static ProgressDialog progressDialog;
 
-    public ScoreBackgroundTask(Context context) {
+    public ScoreBackgroundTask(Context context,String test_id,String scores)
+    {
+        this.test_id=test_id;
+        this.scores=scores;
         this.context=context;
     }
 
@@ -59,7 +63,7 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
              httpURLConnection.setConnectTimeout(9000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-            String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8")+"&"+
+            String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(MainActivity.reg_no,"UTF-8")+"&"+
                     URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode(test_id,"UTF-8")+"&"+
                     URLEncoder.encode("scores","UTF-8")+"="+ URLEncoder.encode(scores,"UTF-8");
             bw.write(post_data);
@@ -91,18 +95,24 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
-        pdd=new ProgressDialog(context);
-        pdd.setCancelable(false);
-        pdd.setMessage("Uploading scores");
-        pdd.show();
+        progressDialog=new ProgressDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Uploading scores");
+        progressDialog.show();
 
     }
 
     @Override
     protected void onPostExecute(String result) {
 
-    Log.e("result",result);
-    pdd.dismiss();
+    Log.e("result","s"+result);
+    progressDialog.dismiss();
+        Intent intent =new Intent(context,HomePage.class);
+        Bundle extras=new Bundle();
+        extras.putString("myStr1",BackgroundTask.name );
+        extras.putString("myStr2",BackgroundTask.email );
+        intent.putExtras(extras);
+        context.startActivity(intent);
     }
 
     @Override
@@ -112,12 +122,18 @@ public class ScoreBackgroundTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onCancelled(String aVoid) {
-        super.onCancelled(aVoid);
+
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }super.onCancelled(aVoid);
     }
 
     @Override
     protected void onCancelled() {
-        super.onCancelled();
+
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }super.onCancelled();
     }
 
 

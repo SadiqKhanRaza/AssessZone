@@ -36,8 +36,8 @@ public class ShowResult extends AsyncTask<String,Void,String> {
     public String name;
     public String email;
     public String jsonString;
-    String reg_id ="11505615";
-    String test_id="14";
+    //String reg_id ="11505615";
+    String test_id="17";
     ProgressDialog pdd;
 
     public ShowResult(Context context) {
@@ -58,7 +58,7 @@ public class ShowResult extends AsyncTask<String,Void,String> {
             httpURLConnection.setConnectTimeout(7000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-            String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8")+"&"+
+            String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(MainActivity.reg_no,"UTF-8")+"&"+
                     URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode(test_id,"UTF-8");
             bw.write(post_data);
             bw.flush();
@@ -99,7 +99,7 @@ public class ShowResult extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
 
-        Log.e("Your Score is ",result);
+        Log.e("Your Score is ","dg"+result);
         pdd.dismiss();
     }
 
@@ -110,11 +110,13 @@ public class ShowResult extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onCancelled(String aVoid) {
+
         super.onCancelled(aVoid);
     }
 
     @Override
     protected void onCancelled() {
+
         super.onCancelled();
     }
 

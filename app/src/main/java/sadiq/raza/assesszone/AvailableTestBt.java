@@ -59,7 +59,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
 
         String test_list="https://assesszone.000webhostapp.com/client/getTest.php";
          try {
-            String reg_id= "11505615";
+            //String reg_id= "11505615";
             URL url = new URL(test_list);
             HttpURLConnection httpURLConnection=(HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
@@ -69,7 +69,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
              httpURLConnection.setConnectTimeout(6000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-            String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(reg_id,"UTF-8");
+            String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(MainActivity.reg_no,"UTF-8");
             bw.write(post_data);
             bw.flush();
             bw.close();
@@ -100,7 +100,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         pd=new ProgressDialog(context);
-        pd.setTitle("Loading test details");
+        pd.setMessage("Loading test details");
         pd.setCancelable(false);
 
         pd.show();
@@ -109,7 +109,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.e("Available Test ", result);
+        //Log.e("Available Test ", "jh"+result);
         try
         {
             if(result!=null)
@@ -152,7 +152,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
             test_name=jsonObject.getString("test_name");
              start_date_time=jsonObject.getString("start_date_time");
              time_allowed=jsonObject.getString("time_allowed");
-            Log.e("tes : ",test_id+" "+test_name);
+            //Log.e("tes : ",test_id+" "+test_name);
             availableTestDetails.add(new AvailableTestDetails(test_id,test_name,start_date_time,time_allowed));
         }
     }
@@ -177,7 +177,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
         for(int i=0;i<availableTestDetails.size();i++)
         {
             myList.add(availableTestDetails.get(i).getTest_name());
-            Log.e("NAme",availableTestDetails.get(i).getTest_name());
+            //Log.e("NAme",availableTestDetails.get(i).getTest_name());
         }
         //LayoutInflater layoutInflater = getLayoutInflater();
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -215,7 +215,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
                 alert.dismiss();
                 testBackgroundTask=new TestBackgroundTask(context,testId);
                 testBackgroundTask.execute();
-                Log.e("clicked",testName+"  dd "+testId);
+                //Log.e("clicked",testName+"  dd "+testId);
             }
         });
         alert.show();

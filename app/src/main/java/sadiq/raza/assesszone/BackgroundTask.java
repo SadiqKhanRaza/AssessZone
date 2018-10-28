@@ -34,8 +34,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     Context context;
     AlertDialog alertDialog;
 
-    public String name;
-    public String email;
+    public static String name;
+    public static String email;
     public String jsonString;
     ProgressDialog progressDialog;
     public BackgroundTask(Context context) {

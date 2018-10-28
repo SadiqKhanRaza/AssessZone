@@ -7,13 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="sadiq.raza.assesszone.SignUp"
-    android:background="@drawable/books"
+    android:background="@drawable/lpu2"
 
-    >\
+    >
 <android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="15dp"
+    app:cardCornerRadius="15dp"
     android:layout_margin="15dp">
     <LinearLayout
         android:orientation="vertical"
@@ -22,7 +23,6 @@
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:background="#ede1ed"
         android:alpha="0.98">
 
 
@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
                 android:textColorHint="#000"
+                android:textColor="#000"
                 android:hint="Name" />
         </android.support.design.widget.TextInputLayout>
 
@@ -58,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textColorHint="#000"
                 android:textColor="#000"
                 android:hint="College" />
         </android.support.design.widget.TextInputLayout>
@@ -72,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:textColor="#000"
+                android:textColorHint="#000"
                 android:hint="Reg. No." />
         </android.support.design.widget.TextInputLayout>
 
@@ -84,6 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="#000"
+                android:textColor="#000"
                 android:inputType="textEmailAddress"
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
@@ -96,6 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="#000"
+                android:textColor="#000"
                 android:inputType="textEmailAddress"
                 android:hint="Confirm Email" />
         </android.support.design.widget.TextInputLayout>
@@ -111,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColorHint="#000"
+                android:textColor="#000"
                 android:hint="Set Password"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -124,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColorHint="#000"
+                android:textColor="#000"
                 android:hint="Confirm Password"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -143,6 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:text="Already a member? Login"
+            android:textColor="#000"
             android:gravity="center"
             android:textSize="16dip"/>
 

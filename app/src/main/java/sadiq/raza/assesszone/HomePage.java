@@ -151,7 +151,7 @@ public class HomePage extends AppCompatActivity
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.profile) {
-            ScoreBackgroundTask score= new ScoreBackgroundTask(HomePage.this);
+            ScoreBackgroundTask score= new ScoreBackgroundTask(HomePage.this,"14","212");
             score.execute();
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
