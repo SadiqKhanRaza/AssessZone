@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import static java.lang.String.format;
 import static  sadiq.raza.assesszone.AvailableTestBt.testBackgroundTask;
+import static sadiq.raza.assesszone.AvailableTestBt.time_allowed;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -83,7 +84,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         aTime=findViewById(R.id.aTime);
         totalTime=findViewById(R.id.totalTime);
         currTime=findViewById(R.id.currTime);
-        currTime.setText("45:00");
+        //currTime.setText("45:00");
 
         radioGroup=findViewById(R.id.radioGroup);
         radioGroup.clearCheck();
@@ -98,6 +99,9 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         length=testBackgroundTask.getLength();
         qTime.setText("Questions 1/"+length);
         responseArray=new String [length];
+        time_allowed="2";
+
+        totalTime.setText(time_allowed+" : 00");
 
 
 
@@ -139,6 +143,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         // current activity
                         //length = al.size();
                         startTime = SystemClock.uptimeMillis();
+                        customHandler.removeCallbacks(updateTimerThread);
                         customHandler.postDelayed(updateTimerThread, 0);
                         s = al.get(0);
 
@@ -327,12 +332,14 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onPause() {
+        customHandler.removeCallbacks(updateTimerThread);
         finish();
         super.onPause();
     }
 
     @Override
     protected void onRestart() {
+        customHandler.removeCallbacks(updateTimerThread);
         finish();
         super.onRestart();
     }
@@ -367,7 +374,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
         return arr;
     }
-
+        boolean flag=true;
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
 
@@ -377,9 +384,20 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
             int secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
+            if(flag && mins==Integer.valueOf(time_allowed)-1)
+            {
+                Toast.makeText(Main2Activity.this, "Your test is about to end !", Toast.LENGTH_SHORT).show();
+                flag=false;
+            }
             secs = secs % 60;
             currTime.setText("" + mins + " : "
                     + String.format("%02d", secs));
+            if(mins==Integer.valueOf(time_allowed))
+            {
+                customHandler.removeCallbacks(updateTimerThread);
+                new ScoreBackgroundTask2().execute();
+            }
+            else
             customHandler.postDelayed(this, 0);
         }
 
@@ -393,7 +411,6 @@ class ScoreBackgroundTask2 extends AsyncTask<String,Void,String> {
 //    public String name;
 //    public String email;
 //    public String jsonString;
-    String reg_id ="6008";
     String test_id;
     //String scores;
      ProgressDialog progressDialog;
@@ -457,6 +474,10 @@ class ScoreBackgroundTask2 extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result) {
         progressDialog.dismiss();
         Log.e("result","s"+result);
+        if(result!=null&&result.equals("1"))
+            Toast.makeText(Main2Activity.context, "Submitted Successfully", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(Main2Activity.context, "Error Occured in Submission", Toast.LENGTH_SHORT).show();
         ((Activity)Main2Activity.context).finish();
 
     }
@@ -468,6 +489,7 @@ class ScoreBackgroundTask2 extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onCancelled(String aVoid) {
+
 
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();

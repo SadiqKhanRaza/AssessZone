@@ -114,7 +114,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
         try {
                 progressDialog.dismiss();
 
-            if(result!=null)
+            if(result!=null && result.length()<100)
             {
                 alertDialog.setMessage(result);
                 alertDialog.show();
@@ -127,6 +127,11 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 context.startActivity(intent);
                 alertDialog.dismiss();
             }
+            else
+            {
+                Toast.makeText(context, "Wrong Credential", Toast.LENGTH_SHORT).show();
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();

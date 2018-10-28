@@ -44,7 +44,8 @@ import java.util.Map;
 public class AvailableTestBt extends AsyncTask<String,Void,String> {
     Context context;
     ProgressDialog pd ;
-    String test_id,test_name,start_date_time,time_allowed;
+    String test_id,test_name;
+    static String start_date_time,time_allowed;
     static TestBackgroundTask testBackgroundTask;
     android.support.v7.app.AlertDialog.Builder builder;
     private ArrayList<AvailableTestDetails> availableTestDetails = new ArrayList<>();

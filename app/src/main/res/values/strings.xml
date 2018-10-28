@@ -9,8 +9,8 @@
     <string name="question">Question</string>
     <string name="total_time">Total Time</string>
     <string name="current_time">Current time</string>
-    <string name="action_set">sgdj\nhgsd\njhgsdvg\nhsdbvhja\nsbvhjab\nvhbdhvbhd\nbvh\njhgsdvg\nhsdbvhja\nsbvhjab\nvhbdhvbhd\nbvh\nbdhvbhdjfbvh\ndbfhvbfdkhv\nbkfbvdhfksb\nvhsdbfvhkdfbhvbdhvbjdhsfbvhjdbfhvjbdsfhvbdsfhjbvhjdfbhvbdsfvbhdfbvhadbfhjvbdfhvbkdjbvkagvkhdfjkvbdshfbvhjsdbfvhjsbdfhjvbdsfjhvbjdhsbvhjsbfjvhsfbdj</string>
+    <string name="action_set">sgdj\n</string>
     <string name="submit">Submit</string>
     <string name="next">Next</string>
-    <string name="quesByTotal">Questions</string>
+    <string name="quesByTotal">Questions </string>
 </resources>
