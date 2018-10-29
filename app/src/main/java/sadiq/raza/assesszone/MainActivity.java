@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                  reg_no=lreg_no.getText().toString();
                 String password =lpassword.getText().toString();
                 String type="login";
-                if(reg_no.length()<3||password.length()<3)
+                if(reg_no.length()<3||password.length()<3|| !reg_no.matches("[0-9]*"))
                     Toast.makeText(MainActivity.this, "Please Enter valid Details", Toast.LENGTH_SHORT).show();
                 else
                 {

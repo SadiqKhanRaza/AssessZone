@@ -13,4 +13,10 @@
     <string name="submit">Submit</string>
     <string name="next">Next</string>
     <string name="quesByTotal">Questions </string>
+    <string name="forgot_npassword">Forgot Password ?</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="reg_no">Reg No.</string>
+    <string name="logo">logo</string>
 </resources>

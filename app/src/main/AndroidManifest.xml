@@ -3,15 +3,17 @@
     package="sadiq.raza.assesszone">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/az2"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/az2"
         android:supportsRtl="true"
+        android:allowClearUserData="false"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".Main2Activity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -32,6 +34,14 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data android:scheme="http"
+                    android:host="assesszone.000webhostapp.com"
+                    android:pathPrefix="/client" />
             </intent-filter>
 
         </activity>

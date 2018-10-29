@@ -465,7 +465,7 @@ class ScoreBackgroundTask2 extends AsyncTask<String,Void,String> {
     protected void onPreExecute() {
         progressDialog=new ProgressDialog(Main2Activity.context);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Uploading scores");
+        progressDialog.setMessage("Submitting scores");
         progressDialog.show();
 
     }

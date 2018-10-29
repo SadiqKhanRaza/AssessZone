@@ -1,5 +1,6 @@
 package sadiq.raza.assesszone;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -51,8 +52,8 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
-            httpURLConnection.setReadTimeout(6000);
-            httpURLConnection.setConnectTimeout(7000);
+            httpURLConnection.setReadTimeout(4000);
+            httpURLConnection.setConnectTimeout(4000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("name","UTF-8")+"="+ URLEncoder.encode(name,"UTF-8")+"&"+
@@ -100,16 +101,12 @@ public class BackgroundTask2 extends AsyncTask<String,Void,String> {
         Log.e("res","j"+result);
             SignUp.progressDialog.dismiss();
         //Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent();
-                intent.setAction("CLOSE_SIGNUP");
-                context.sendBroadcast(intent);
-            }
-        }, 1500);
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ((Activity)context).finish();
 
     }
 

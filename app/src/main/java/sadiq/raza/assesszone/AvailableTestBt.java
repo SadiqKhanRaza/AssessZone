@@ -1,19 +1,13 @@
 package sadiq.raza.assesszone;
 
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -35,7 +29,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by Sadiq on 3/11/2018.
@@ -66,8 +59,8 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
-             httpURLConnection.setReadTimeout(6000);
-             httpURLConnection.setConnectTimeout(6000);
+             httpURLConnection.setReadTimeout(5000);
+             httpURLConnection.setConnectTimeout(5000);
             OutputStream outputStream=httpURLConnection.getOutputStream();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String post_data= URLEncoder.encode("reg_id","UTF-8")+"="+ URLEncoder.encode(MainActivity.reg_no,"UTF-8");
@@ -119,7 +112,10 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
                 openTestList();
             }
             else
+            {
+                Toast.makeText(context, "Could not load test details", Toast.LENGTH_SHORT).show();
                 Log.e("ss","null");
+            }
 
         }
         catch (JSONException e)
@@ -174,7 +170,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
         }*/
         builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setCancelable(false);
-        ArrayList<String> myList=new ArrayList<>();
+        ArrayList<String> myList=new ArrayList<String>();
         for(int i=0;i<availableTestDetails.size();i++)
         {
             myList.add(availableTestDetails.get(i).getTest_name());
@@ -197,7 +193,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
         ListView listView = newView.findViewById(R.id.listView);
         final android.support.v7.app.AlertDialog alert = builder.create();
         alert.setTitle("Available Tests");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(context,android.R.layout.simple_list_item_activated_1,myList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context,android.R.layout.simple_list_item_activated_1,myList);
 
 
         listView.setAdapter(arrayAdapter);

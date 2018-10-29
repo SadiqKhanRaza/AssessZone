@@ -27,7 +27,7 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //Broadcast reciever to close the application
-        registerReceiver(mReciever, new IntentFilter("CLOSE_SIGNUP"));
+        //registerReceiver(mReciever, new IntentFilter("CLOSE_SIGNUP"));
 
         progressDialog = new ProgressDialog(this);
         setContentView(R.layout.activity_sign_up);
@@ -106,18 +106,29 @@ public class SignUp extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
         String name = et_name.getText().toString();
-       // String regNo=et_regNo.getText().toString();
-        //String college=et_college.getText().toString();
+        String regNo=et_regNo.getText().toString();
+        String college=et_college.getText().toString();
         String email = et_email.getText().toString();
         String confirmEmail = et_cEmail.getText().toString();
         String password = et_password.getText().toString();
         String confirmPassword = et_confirmPassword.getText().toString();
 
+        if (regNo.isEmpty() || regNo.length() < 3 || regNo.matches("0-9")) {
+            et_regNo.setError("at least 3 characters");
+            valid = false;
+        }
 
-        if (name.isEmpty() || name.length() < 3) {
+        if (name.isEmpty() || name.length() < 3 ) {
             et_name.setError("at least 3 characters");
             valid = false;
-        } else {
+        }
+        else if(!name.matches("[a-zA-Z ]*"))
+        {
+            et_name.setError("Special character not allowed");
+            valid=false;
+        }
+
+        else {
            et_name.setError(null);
         }
 
@@ -139,7 +150,13 @@ public class SignUp extends AppCompatActivity {
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
             et_password.setError("between 4 and 10 alphanumeric characters");
             valid = false;
-        } else {
+        }
+        else if(!password.matches("[a-zA-Z0-9@#$]*"))
+        {
+            et_password.setError("This password not allowed");
+            valid=false;
+        }
+        else {
             et_password.setError(null);
         }
         if(!confirmPassword.equals(password))
@@ -151,13 +168,16 @@ public class SignUp extends AppCompatActivity {
             et_confirmPassword.setError(null);
         }
 
+        if(!college.matches("[a-zA-Z ]*"))
+        {
+            et_college.setError("Please Enter valid college name");
+            valid=false;
+        }
+        else
+            et_college.setError(null);
+
         return valid;
     }
 
-    BroadcastReceiver mReciever = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            finish();
-        }
-    };
+
 }
