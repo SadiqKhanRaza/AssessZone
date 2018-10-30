@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.system.Os;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,6 +27,15 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.X509TrustManager;
 
 /**
  * Created by Sadiq on 3/11/2018.
@@ -50,6 +61,11 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
        if(type.equals("login")) try {
             String reg_id=param[1];
             String u_password=param[2];
+           if (android.os.Build.VERSION.SDK_INT <21) {
+               // only for gingerbread and newer versions
+               trustEveryone();
+               Log.e("Version",""+Build.VERSION.SDK_INT);
+           }
             URL url = new URL(login_url);
             HttpURLConnection httpURLConnection=(HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
@@ -129,6 +145,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             }
             else
             {
+                Log.e("rs","d"+result);
                 Toast.makeText(context, "Wrong Credential", Toast.LENGTH_SHORT).show();
             }
 
@@ -165,6 +182,27 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
 return  null;
 
+    }
+    private void trustEveryone() {
+        try {
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier(){
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }});
+            SSLContext context = SSLContext.getInstance("TLS");
+            context.init(null, new X509TrustManager[]{new X509TrustManager(){
+                public void checkClientTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {}
+                public void checkServerTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {}
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }}}, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(
+                    context.getSocketFactory());
+        } catch (Exception e) { // should never happen
+            e.printStackTrace();
+        }
     }
 
 }
