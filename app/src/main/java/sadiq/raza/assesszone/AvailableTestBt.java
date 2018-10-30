@@ -53,7 +53,6 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
 
         String test_list="https://assesszone.000webhostapp.com/client/getTest.php";
          try {
-            //String reg_id= "11505615";
             URL url = new URL(test_list);
             HttpURLConnection httpURLConnection=(HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
@@ -154,20 +153,13 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
         }
     }
 
-    public ArrayList<AvailableTestDetails> getAvailableTestDetails() {
-        return availableTestDetails;
-    }
+//    public ArrayList<AvailableTestDetails> getAvailableTestDetails() {
+//        return availableTestDetails;
+//    }
 
     private void openTestList()
     {
-        /*AvailableTestBt test=new AvailableTestBt(HomePage.this);
-        //test.execute();
-        //al=test.getAvailableTestDetails();
-        if(al==null)
-        {
-            Toast.makeText(this, "Empty Test", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
+
         builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setCancelable(false);
         ArrayList<String> myList=new ArrayList<String>();
@@ -176,7 +168,6 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
             myList.add(availableTestDetails.get(i).getTest_name());
             //Log.e("NAme",availableTestDetails.get(i).getTest_name());
         }
-        //LayoutInflater layoutInflater = getLayoutInflater();
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View newView = layoutInflater.inflate(R.layout.testlist,null);
 

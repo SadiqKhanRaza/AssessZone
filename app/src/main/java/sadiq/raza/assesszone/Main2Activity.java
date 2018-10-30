@@ -1,5 +1,6 @@
 package sadiq.raza.assesszone;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ProgressDialog;
@@ -51,7 +52,6 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
       Button submit;
       static Context context;
       static  int ans;
-      static ProgressDialog progressDialog;
     static ArrayList<MyDataStructure> al;
     private ArrayList<String> options;
     private String responseArray[];
@@ -139,9 +139,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, close
-                        // current activity
-                        //length = al.size();
+
                         startTime = SystemClock.uptimeMillis();
                         customHandler.removeCallbacks(updateTimerThread);
                         customHandler.postDelayed(updateTimerThread, 0);
@@ -157,24 +155,20 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
+
                         dialog.cancel();
                         finish();
                     }
                 });
 
-        // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
 
         // show it
         alertDialog.show();
-
-        //question=testBackgroundTask.question;
-
         s = new MyDataStructure();
     }
 
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
     public void onClick(View view) {
         switch (view.getId())
@@ -185,8 +179,6 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 prev.setEnabled(true);
                  if(i<length-1)
                     {
-                        //next.setEnabled(true);
-                        //Log.e("AAAAAAAAAAAAA", "01 i l "+i+"  "+length);
                         next.setText(R.string.next);
                         i++;
 
@@ -239,8 +231,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     tv_ques.setText(Html.fromHtml(s.getQues()));
                     options=s.getOption();
                     setOption(options);
-                    qTime.setText(new StringBuilder().append("Questions ").append(i + 1).append("/")
-                            .append(length).toString());
+                    qTime.setText(getString(R.string.Ques) + (i + 1) + "/" +
+                            length);
                     aTime.setText(format("Attempted %d", questionAttempted()));
                     radioGroup.clearCheck();
                     if(responseArray != null && responseArray[i]!=null)
@@ -273,33 +265,18 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         Main2Activity.this);
 
                 alertDialogBuilder2.setTitle("Submit Test");
-
-                // set dialog message
                 alertDialogBuilder2.setMessage("Are you sure you want to submit");
                 alertDialogBuilder2.setCancelable(false);
                 alertDialogBuilder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
                          ans=findScore();
-                        /*StringBuilder sb = new StringBuilder("");
-                        String ansArr[]=getAnswer();
-                        for(int j=0;j<length;j++)
-                            sb.append(" ").append(ansArr[j]);
-                        Log.e("response: ",sb.toString());*/
-                        //ScoreBackgroundTask sc=new ScoreBackgroundTask(Main2Activity.this,
-                        // testBackgroundTask.getTestId(),String.valueOf(ans));
-                        //sc.execute();
                         new ScoreBackgroundTask2().execute();
-                        //Toast.makeText(Main2Activity.this, "Submitted Successfully : "+ans, Toast.LENGTH_SHORT).show();
                         dialog.cancel();
-                        //progressDialog.dismiss();
-                        //    finish();
                     }
 
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
                         dialog.cancel();
                     }
                 });
@@ -327,7 +304,6 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
         Toast.makeText(this, "Not Allowed to go back", Toast.LENGTH_SHORT).show();
-        //HomePage.openTestPb.dismiss();
     }
 
     @Override
@@ -376,6 +352,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     }
         boolean flag=true;
     private Runnable updateTimerThread = new Runnable() {
+        @SuppressLint({"SetTextI18n", "DefaultLocale"})
         public void run() {
 
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;

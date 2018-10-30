@@ -26,9 +26,6 @@ public class SignUp extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Broadcast reciever to close the application
-        //registerReceiver(mReciever, new IntentFilter("CLOSE_SIGNUP"));
-
         progressDialog = new ProgressDialog(this);
         setContentView(R.layout.activity_sign_up);
         et_name=findViewById(R.id.name);
@@ -49,14 +46,11 @@ public class SignUp extends AppCompatActivity {
                 progressDialog.setMessage("Creating your account...");
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setCancelable(false);
-               // progressDialog.show();
-
                 String name = et_name.getText().toString();
                 String regNo=et_regNo.getText().toString();
                 String college=et_college.getText().toString();
                 String email = et_email.getText().toString();
                 String password = et_password.getText().toString();
-                //String confirmPassword = et_confirmPassword.getText().toString();
                 if(signup())
                 {
                     progressDialog.show();
@@ -70,7 +64,6 @@ public class SignUp extends AppCompatActivity {
         linkLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
                 finish();
             }
         });
@@ -88,14 +81,6 @@ public class SignUp extends AppCompatActivity {
 
         return true;
     }
-
-
-   /* public void onSignupSuccess() {
-        Toast.makeText(getApplicationContext(),"Successfully Created your Account",Toast.LENGTH_SHORT).show();
-        signUpUser.setEnabled(true);
-        setResult(RESULT_OK, null);
-        finish();
-    }*/
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();

@@ -27,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.Certificate;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -62,7 +63,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
             String reg_id=param[1];
             String u_password=param[2];
            if (android.os.Build.VERSION.SDK_INT <21) {
-               // only for gingerbread and newer versions
                trustEveryone();
                Log.e("Version",""+Build.VERSION.SDK_INT);
            }
@@ -121,8 +121,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
         alertDialog= new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Login Status");
-        //alertDialog.setMessage("HI");
-        //alertDialog.show();
     }
 
     @Override

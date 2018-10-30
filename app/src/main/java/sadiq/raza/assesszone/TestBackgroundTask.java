@@ -43,11 +43,8 @@ import java.util.ArrayList;
         @Override
         protected String doInBackground(String... param) {
 
-            //String type =param[0];
             String question_url="https://assesszone.000webhostapp.com/client/getQuestions.php";
-            /*if(type.equals("login"))*/ try {
-                //String testId=param[1];
-
+            try {
                 URL url = new URL(question_url);
                 HttpURLConnection httpURLConnection=(HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -113,9 +110,6 @@ import java.util.ArrayList;
                 HomePage.openTestPb.dismiss();
             if(quesList.size()>1)
                 context.startActivity(new Intent(context,Main2Activity.class));
-
-            //else
-              //  Toast.makeText(context, "No Test available with this test id ", Toast.LENGTH_SHORT).show();
 
 
         }

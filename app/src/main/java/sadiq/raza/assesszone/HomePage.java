@@ -33,7 +33,6 @@ public class HomePage extends AppCompatActivity
     static String s_name,s_email;
     ProgressBar progressBar;
     CardView cardView;
-    //AlertDialog.Builder builder;
     ArrayList<String> myList;
     static ProgressDialog openTestPb;
     private ArrayList<AvailableTestDetails> al;
@@ -42,17 +41,17 @@ public class HomePage extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View view=navigationView.getHeaderView(0);
         Intent intent=getIntent();
@@ -82,12 +81,6 @@ public class HomePage extends AppCompatActivity
 
         myList = new ArrayList<>();
 
-        //myList.add("Test 1");
-        //myList.add("sdsds");
-
-
-
-
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -113,12 +106,8 @@ public class HomePage extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
@@ -139,13 +128,9 @@ public class HomePage extends AppCompatActivity
             new AvailableTestBt(HomePage.this).execute();
 
         } else if (id == R.id.result) {
-            //AvailableTestBt test=new AvailableTestBt(HomePage.this);
-            //test.execute();
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.profile) {
-            ScoreBackgroundTask score= new ScoreBackgroundTask(HomePage.this,"14","212");
-            score.execute();
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_share) {
@@ -158,7 +143,7 @@ public class HomePage extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
