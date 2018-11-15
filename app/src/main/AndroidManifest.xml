@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/assess_zone"
+        android:icon="@mipmap/az_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/assess_zone"
+        android:roundIcon="@mipmap/az_icon"
         android:supportsRtl="true"
         android:allowClearUserData="false"
         android:theme="@style/AppTheme">
