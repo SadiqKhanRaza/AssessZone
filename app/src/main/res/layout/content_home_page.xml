@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
-            android:text="1. Leader 1"
+            android:text="1. Sadiq Raza"
             android:textColor="@android:color/background_dark"
             android:textSize="18sp" />
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:paddingLeft="10dp"
-            android:text="2. Leader 2"
+            android:text="2. Vivek Tiwari"
             android:textColor="@android:color/background_dark"
             android:textSize="18sp" />
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
             android:paddingLeft="10dp"
-            android:text="3. Leader 3"
+            android:text="3. Harshit Tripathi"
             android:textColor="@android:color/background_dark"
             android:textSize="18sp" />
 
@@ -70,7 +70,7 @@
         android:layout_marginTop="30dp"
         android:indeterminate="false"
         android:max="30"
-        android:progress="20"
+        android:progress="12"
         android:progressDrawable="@drawable/progressbar" />
 
     <TextView

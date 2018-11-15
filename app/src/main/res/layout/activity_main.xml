@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/lpu"
     tools:context=".MainActivity">
+
     <View
 
         android:id="@+id/visi"
@@ -13,7 +14,7 @@
         android:layout_height="match_parent"
         android:background="#a7e9e9e9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,14 +22,14 @@
         android:id="@+id/imageView"
         android:layout_width="140dp"
         android:layout_height="120dp"
-        android:layout_marginEnd="117dp"
-        android:layout_marginStart="117dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/zenith_pshycological_services"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/ic_assz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/logo" />
+        app:layout_constraintTop_toTopOf="@+id/visi" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

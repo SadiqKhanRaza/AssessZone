@@ -25,9 +25,9 @@
 
 
         <ImageView
-            android:background="@drawable/zenith_pshycological_services"
-            android:layout_width="140dp"
-            android:layout_height="80dp"
+            android:background="@drawable/ic_assz"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 

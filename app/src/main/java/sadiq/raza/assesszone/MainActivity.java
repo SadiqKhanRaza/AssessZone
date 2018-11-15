@@ -19,18 +19,15 @@ public class MainActivity extends AppCompatActivity {
     EditText lreg_no,lpassword;
     static String reg_no;
     ConnectivityManager connectivityManager;
-  // static ProgressDialog mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
         reg=findViewById(R.id.reg);
         logIn=findViewById(R.id.login);
         lreg_no=findViewById(R.id.uname);
         lpassword=findViewById(R.id.upass);
-        //mProgressBar= new ProgressDialog(this);
         forgotPass=findViewById(R.id.fPass);
         connectivityManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         forgotPass.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // mProgressBar.setCancelable(false);
                 if(!isConnected())
                 {
                     Toast.makeText(MainActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -87,13 +83,11 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
         if(networkInfo!=null && networkInfo.isConnected())
         {
-            if(networkInfo.getType()==ConnectivityManager.TYPE_WIFI ||
-                    networkInfo.getType()==ConnectivityManager.TYPE_MOBILE)
-            return true;
+            return networkInfo.getType() == ConnectivityManager.TYPE_WIFI ||
+                    networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
         }
         return  false;
     }
-
 
 }
 
