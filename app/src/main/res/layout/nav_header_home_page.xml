@@ -16,8 +16,7 @@
         android:id="@+id/imageView"
         android:layout_width="160dp"
         android:layout_height="100dp"
-        android:paddingTop="8dp"
-        android:src="@drawable/sadiq"
+        android:src="@drawable/sadiq_2"
         android:contentDescription="@string/nav_header_desc"
         />
 

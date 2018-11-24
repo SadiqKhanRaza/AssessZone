@@ -46,7 +46,7 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview2"
-        android:layout_width="235dp"
+        android:layout_width="220dp"
         android:layout_height="417dp"
 
         android:layout_marginStart="4dp"
@@ -73,30 +73,23 @@
         android:id="@+id/cd1"
         android:layout_width="120dp"
         android:layout_height="105dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:elevation="10dp"
         app:layout_constraintBottom_toTopOf="@+id/cd2"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/cardview2">
 
         <TextView
-            android:background="#a5c7b5b5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#a5c7b5b5"
             android:gravity="center"
 
-            android:textSize="18sp"
-            android:text="Total Tests Cunducted" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="102"
-            android:background="#a5c7b5b5"
-            android:textSize="28sp"
-            android:textColor="#81786a"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            />
+            android:text=" Attempt Test"
+            android:textSize="24sp" />
 
     </android.support.v7.widget.CardView>
 
@@ -104,30 +97,34 @@
         android:id="@+id/cd2"
         android:layout_width="120dp"
         android:layout_height="105dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"  android:background="#dedad1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:background="#dedad1"
         android:elevation="10dp"
         app:layout_constraintBottom_toTopOf="@+id/cd3"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/cardview2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:background="#c4dfea"
-            android:text="Total Teachers" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="8"
+            android:background="#c4dfea"
             android:gravity="center"
+            android:text="Total Teachers"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:background="#c4dfea"
-            android:textSize="28sp"
+            android:gravity="center"
+            android:text="8"
             android:textColor="#81786a"
-            android:layout_gravity="center"
-            />
+            android:textSize="28sp" />
 
     </android.support.v7.widget.CardView>
 
@@ -135,9 +132,10 @@
         android:id="@+id/cd3"
         android:layout_width="120dp"
         android:layout_height="105dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+
         android:background="#dedad1"
-        android:layout_marginBottom="28dp"
         android:elevation="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/cardview2"
@@ -146,21 +144,21 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:background="#c4dfea"
+            android:gravity="center"
             android:padding="1dp"
-            android:textSize="18sp"
-            android:text="Total Students" />
+            android:text="Total Students"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:background="#c4dfea"
             android:gravity="center"
             android:text=" 10 "
-            android:layout_marginTop="4dp"
             android:textColor="#81786a"
-            android:background="#c4dfea"
 
             android:textSize="28sp" />
 

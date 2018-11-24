@@ -37,11 +37,12 @@ public class ShowResult extends AsyncTask<String,Void,String> {
     public String email;
     public String jsonString;
     //String reg_id ="11505615";
-    String test_id="17";
+    String test_id;
     ProgressDialog pdd;
 
-    public ShowResult(Context context) {
+    public ShowResult(Context context,String test_id) {
         this.context=context;
+        this.test_id=test_id;
     }
 
     @Override
@@ -100,6 +101,10 @@ public class ShowResult extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result) {
 
         Log.e("Your Score is ","dg"+result);
+        if(result.length()>0)
+           Toast.makeText(context, "Your scores for each attempt are/is : "+result, Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(context, "You have not attempted this test", Toast.LENGTH_SHORT).show();
         pdd.dismiss();
     }
 

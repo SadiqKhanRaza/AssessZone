@@ -44,9 +44,11 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
     android.support.v7.app.AlertDialog.Builder builder;
     private ArrayList<AvailableTestDetails> availableTestDetails = new ArrayList<>();
     private String testId;
+    public  static Boolean practice;
 
     Boolean flag;
-    public AvailableTestBt(Context context,Boolean flag) {
+    public AvailableTestBt(Context context,Boolean flag,Boolean practice) {
+        this.practice=practice;
         this.context=context;
         this.flag=flag;
     }
@@ -153,6 +155,12 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
              start_date_time=jsonObject.getString("start_date_time");
              time_allowed=jsonObject.getString("time_allowed");
             //Log.e("tes : ",test_id+" "+test_name);
+            if(practice)
+            {
+                if(test_name.startsWith("Practice"))
+                    availableTestDetails.add(new AvailableTestDetails(test_id,test_name,start_date_time,time_allowed));
+            }
+            else
             availableTestDetails.add(new AvailableTestDetails(test_id,test_name,start_date_time,time_allowed));
         }
     }

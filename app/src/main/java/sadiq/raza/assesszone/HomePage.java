@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -60,9 +61,9 @@ public class HomePage extends AppCompatActivity
         imageView=view.findViewById(R.id.imageView);
 
          listView= findViewById(R.id.list_view);
-       AvailableTestBt abt= new AvailableTestBt(HomePage.this,true);
+       AvailableTestBt abt= new AvailableTestBt(HomePage.this,true,false);
        abt.execute();
-
+        cardView=findViewById(R.id.cd1);
 
 
         assert extras != null;
@@ -84,15 +85,15 @@ public class HomePage extends AppCompatActivity
 
         myList = new ArrayList<>();
 
-        /*cardView.setOnClickListener(new View.OnClickListener() {
+        cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
                 //openTestList();
-                new AvailableTestBt(HomePage.this).execute();
+                new AvailableTestBt(HomePage.this,false,false).execute();
 
             }
-        });*/
+        });
 
 
     }
@@ -125,20 +126,48 @@ public class HomePage extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.practice) {
-            // Handle the camera action
-            Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
+            new AvailableTestBt(HomePage.this,false,true).execute();
+
         } else if (id == R.id.attepmt) {
-            new AvailableTestBt(HomePage.this,false).execute();
+            new AvailableTestBt(HomePage.this,false,false).execute();
 
         } else if (id == R.id.result) {
+            LayoutInflater li = LayoutInflater.from(HomePage.this);
+            View promptsView = li.inflate(R.layout.prompt, null);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+            alertDialogBuilder.setView(promptsView);
+            final EditText userInput = (EditText) promptsView
+                    .findViewById(R.id.editTextDialogUserInput);
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("Show Result",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    String testIdForResult=userInput.getText().toString();
+                                    if(testIdForResult.length()<1)
+                                        Toast.makeText(HomePage.this, "Please Enter Test id", Toast.LENGTH_SHORT).show();
+                                    else{
+                                    ShowResult showResult = new ShowResult(HomePage.this,testIdForResult);
+                                    showResult.execute();}
+                                }
+                            })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    dialog.cancel();
+                                }
+                            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            alertDialog.show();
             //Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.profile) {
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_share) {
-            ShowResult showResult= new ShowResult(HomePage.this);
-            showResult.execute();
+
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {

@@ -57,6 +57,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     private String responseArray[];
     private long startTime,timeInMilliseconds,updatedTime;
     private Handler customHandler= new Handler();
+    int attempt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -309,14 +310,18 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onPause() {
         customHandler.removeCallbacks(updateTimerThread);
-        finish();
+
         super.onPause();
     }
 
     @Override
     protected void onRestart() {
         customHandler.removeCallbacks(updateTimerThread);
-        finish();
+        if(attempt>2)
+            new ScoreBackgroundTask2().execute();
+        else
+            Toast.makeText(context, "Not Allowed", Toast.LENGTH_SHORT).show();
+        attempt++;
         super.onRestart();
     }
     private  int questionAttempted()
@@ -451,7 +456,9 @@ class ScoreBackgroundTask2 extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result) {
         progressDialog.dismiss();
         Log.e("result","s"+result);
-        if(result!=null&&result.equals("1"))
+        if(result!=null&&result.equals("1")&& AvailableTestBt.practice)
+            Toast.makeText(Main2Activity.context, "Your Score is "+ Main2Activity.ans, Toast.LENGTH_LONG).show();
+        else if(result!=null&&result.equals("1"))
             Toast.makeText(Main2Activity.context, "Submitted Successfully", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(Main2Activity.context, "Error Occured in Submission", Toast.LENGTH_SHORT).show();
