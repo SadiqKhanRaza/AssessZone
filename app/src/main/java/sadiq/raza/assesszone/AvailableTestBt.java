@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 public class AvailableTestBt extends AsyncTask<String,Void,String> {
     Context context;
+    ArrayList<String> myList;
     ProgressDialog pd ;
     String test_id,test_name;
     static String start_date_time,time_allowed;
@@ -43,8 +44,11 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
     android.support.v7.app.AlertDialog.Builder builder;
     private ArrayList<AvailableTestDetails> availableTestDetails = new ArrayList<>();
     private String testId;
-    public AvailableTestBt(Context context) {
+
+    Boolean flag;
+    public AvailableTestBt(Context context,Boolean flag) {
         this.context=context;
+        this.flag=flag;
     }
 
     @Override
@@ -102,7 +106,7 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        //Log.e("Available Test ", "jh"+result);
+       // Log.e("Available Test ", "jh"+result);
         try
         {
             if(result!=null)
@@ -162,11 +166,18 @@ public class AvailableTestBt extends AsyncTask<String,Void,String> {
 
         builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setCancelable(false);
-        ArrayList<String> myList=new ArrayList<String>();
+        myList=new ArrayList<String>();
         for(int i=0;i<availableTestDetails.size();i++)
         {
             myList.add(availableTestDetails.get(i).getTest_name());
             //Log.e("NAme",availableTestDetails.get(i).getTest_name());
+        }
+        if(flag==true)
+        {
+            ArrayAdapter<String> itemsAdapter =
+                    new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, myList);
+            HomePage.listView.setAdapter(itemsAdapter);
+            return;
         }
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View newView = layoutInflater.inflate(R.layout.testlist,null);

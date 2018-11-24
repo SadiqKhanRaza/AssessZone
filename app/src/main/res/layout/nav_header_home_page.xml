@@ -17,6 +17,7 @@
         android:layout_width="160dp"
         android:layout_height="100dp"
         android:paddingTop="8dp"
+        android:src="@drawable/sadiq"
         android:contentDescription="@string/nav_header_desc"
         />
 

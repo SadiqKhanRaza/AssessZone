@@ -30,6 +30,7 @@ public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView navName,navEmail;
     ImageView imageView ;
+    public static ListView listView;
     static String s_name,s_email;
     ProgressBar progressBar;
     CardView cardView;
@@ -57,9 +58,12 @@ public class HomePage extends AppCompatActivity
         Intent intent=getIntent();
         Bundle extras =intent.getExtras();
         imageView=view.findViewById(R.id.imageView);
-        String uri = "az1";
-        int imageResource = getResources().getIdentifier(uri, "drawable", this.getPackageName());
-        imageView.setImageResource(imageResource);
+
+         listView= findViewById(R.id.list_view);
+       AvailableTestBt abt= new AvailableTestBt(HomePage.this,true);
+       abt.execute();
+
+
 
         assert extras != null;
         s_name=extras.getString("myStr1");
@@ -72,16 +76,15 @@ public class HomePage extends AppCompatActivity
         navEmail.setText(s_email);
         openTestPb=new ProgressDialog(HomePage.this);
         openTestPb.setMessage("Pleae Wait...");
+        TextView tvName=findViewById(R.id.textView2);
+        tvName.setText("Welcome "+s_name);
 
         //ProgressBar
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setProgress(20);
 
-        cardView = findViewById(R.id.testCardView);
 
         myList = new ArrayList<>();
 
-        cardView.setOnClickListener(new View.OnClickListener() {
+        /*cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
@@ -89,7 +92,7 @@ public class HomePage extends AppCompatActivity
                 new AvailableTestBt(HomePage.this).execute();
 
             }
-        });
+        });*/
 
 
     }
@@ -125,10 +128,10 @@ public class HomePage extends AppCompatActivity
             // Handle the camera action
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.attepmt) {
-            new AvailableTestBt(HomePage.this).execute();
+            new AvailableTestBt(HomePage.this,false).execute();
 
         } else if (id == R.id.result) {
-            Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.profile) {
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
