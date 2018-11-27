@@ -138,15 +138,16 @@
                 android:scrollbars="vertical">
 
                 <TextView
+                    android:layout_margin="2dp"
                     android:id="@+id/qText"
-                    android:padding="10dp"
+                    android:padding="4dp"
+                    android:lineSpacingExtra="-6dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:justificationMode="inter_word"
-                    android:maxWidth="450dp"
-                    android:text="All The Best"
+                    android:maxWidth="600dp"
+                    android:text="All the best"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </ScrollView>
 

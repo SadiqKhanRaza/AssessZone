@@ -14,9 +14,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="160dp"
-        android:layout_height="100dp"
-        android:src="@drawable/sadiq_2"
+        android:layout_width="150dp"
+        android:layout_height="85dp"
+        android:src="@drawable/ic_assz"
         android:contentDescription="@string/nav_header_desc"
         />
 

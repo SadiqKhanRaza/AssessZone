@@ -50,8 +50,8 @@ import java.util.ArrayList;
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setDoInput(true);
-                httpURLConnection.setReadTimeout(7000);
-                httpURLConnection.setConnectTimeout(7000);
+                httpURLConnection.setReadTimeout(8000);
+                httpURLConnection.setConnectTimeout(9000);
                 OutputStream outputStream=httpURLConnection.getOutputStream();
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
                 String post_data= URLEncoder.encode("test_id","UTF-8")+"="+ URLEncoder.encode(testId +

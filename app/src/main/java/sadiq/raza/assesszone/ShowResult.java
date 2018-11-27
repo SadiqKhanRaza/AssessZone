@@ -102,7 +102,7 @@ public class ShowResult extends AsyncTask<String,Void,String> {
 
         Log.e("Your Score is ","dg"+result);
         if(result.length()>0)
-           Toast.makeText(context, "Your scores for each attempt are/is : "+result, Toast.LENGTH_LONG).show();
+           Toast.makeText(context, "Your scores for each attempt  : "+result, Toast.LENGTH_LONG).show();
         else
             Toast.makeText(context, "You have not attempted this test", Toast.LENGTH_SHORT).show();
         pdd.dismiss();

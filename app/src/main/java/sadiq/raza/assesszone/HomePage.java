@@ -171,7 +171,8 @@ public class HomePage extends AppCompatActivity
             Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
-            Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
+            finish();
+            //Toast.makeText(this, "Under Construction", Toast.LENGTH_SHORT).show();
 
         }
 

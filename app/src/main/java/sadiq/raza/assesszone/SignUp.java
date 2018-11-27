@@ -83,7 +83,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Signup failed", Toast.LENGTH_LONG).show();
 
         signUpUser.setEnabled(true);
     }
@@ -109,7 +109,7 @@ public class SignUp extends AppCompatActivity {
         }
         else if(!name.matches("[a-zA-Z ]*"))
         {
-            et_name.setError("Special character not allowed");
+            et_name.setError("Special character or number not allowed");
             valid=false;
         }
 

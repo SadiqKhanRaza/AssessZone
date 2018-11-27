@@ -147,6 +147,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         s = al.get(0);
 
                         tv_ques.setText(Html.fromHtml(s.getQues()));
+                        tv_ques.setIncludeFontPadding(false);
                         options=s.getOption();
                         setOption(options);
                         qTime.setText(getString(R.string.quesByTotal)+(i+1)+"/"+length);
@@ -309,14 +310,14 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onPause() {
-        customHandler.removeCallbacks(updateTimerThread);
+        //customHandler.removeCallbacks(updateTimerThread);
 
         super.onPause();
     }
 
     @Override
     protected void onRestart() {
-        customHandler.removeCallbacks(updateTimerThread);
+        //customHandler.removeCallbacks(updateTimerThread);
         if(attempt>2)
             new ScoreBackgroundTask2().execute();
         else
