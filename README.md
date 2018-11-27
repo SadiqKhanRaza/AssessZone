@@ -11,3 +11,4 @@ Tab Switch is not allowed and if someone tries, the test will get closed after s
 Profile picture and name would be displayed on the test portal of app to identify that, the right person is attempting the test.
 Very useful for programming MCQs as the test taker would not be able to either search the question on goole or to compile in any editor.
 Link for the website: https://assesszone.000webhostapp.com
+Link for App : https://play.google.com/store/apps/details?id=sadiq.raza.assesszone&rdid=sadiq.raza.assesszone
